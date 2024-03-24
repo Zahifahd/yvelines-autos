@@ -18,17 +18,17 @@
 - En tant qu'utilisateur je peux acheté une voiture
 
 #### Technologies 
-*Photoshop
-*Figma
-*CodeQR
-*note.js
-*java
-*javascript
-*reactjs
-*SQLServer
-*MongoDb
-*VisualStudioCode
-*Application Mobile Android/IOS
+- Photoshop
+- Figma
+- CodeQR
+- note.js
+- java
+- javascript
+- reactjs
+- SQLServer
+- MongoDb
+- VisualStudioCode
+- Application Mobile Android/IOS
 
 
 ##### Date de sortie du projet 
