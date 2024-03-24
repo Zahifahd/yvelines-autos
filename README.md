@@ -17,7 +17,7 @@
 . En tant qu'utilisateur je peux vendre des voitures
 . En tant qu'utilisateur je peux acheté une voiture
 
-#### technologies 
+#### Technologies 
 *Photoshop
 *Figma
 *CodeQR
