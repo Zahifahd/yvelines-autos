@@ -1,5 +1,5 @@
 # yveslines-auto concessionnaire automobile pour une société  française
-    lien project:www.yvelines-auto.com
+    [lien kanban](https://github.com/users/Zahifahd/projects/1/views/1)
 
 ## projet en cours de realisation par :
   - Zahi Fahd
@@ -18,10 +18,10 @@
 - En tant qu'utilisateur je peux acheté une voiture
 
 #### Technologies 
-- Photoshop
+- [Photoshop](https://www.adobe.com/fr/products/photoshop.html)
 - Figma
 - CodeQR
-- note.js
+- node.js 
 - java
 - javascript
 - reactjs
