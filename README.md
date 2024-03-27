@@ -2,8 +2,8 @@
 - [lien kanban](https://github.com/users/Zahifahd/projects/1/views/1)
 
 ## projet en cours de realisation par :
-  - Zahi Fahd
-  - Boukir Reda
+  - Zahi Fahd  (Groupe 🅰️)
+  - Boukir Reda  (Groupe 🅰️) 
 
 ### Fonctionnalités proposées :
 
