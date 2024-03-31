@@ -20,16 +20,16 @@
 
 #### Technologies 
 - [Photoshop](https://www.adobe.com/fr/products/photoshop.html)
-- Figma
-- CodeQR
-- node.js 
-- java
-- javascript
-- reactjs
-- SQLServer
-- MongoDb
-- VisualStudioCode
-- Application Mobile Android/IOS
+- [Figma](https://www.figma.com/)
+- [CodeQR](https://fr.qr-code-generator.com/)
+- [node.js](https://nodejs.org/en)
+- [java](https://www.java.com/fr/)
+- [javascript](https://www.java.com/fr/download/ie_manual.jsp)
+- [reactjs](https://react.dev/)
+- [SQLServer](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+- [MongoDb](https://www.mongodb.com/fr-fr)
+- [VisualStudioCode](https://code.visualstudio.com/)
+- [Application Mobile Android/IOS]sera disponible le mois septembre nchaelah
 
 
 ##### Date de sortie du projet 
