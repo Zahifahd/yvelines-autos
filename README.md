@@ -1,4 +1,4 @@
-# yvelines-auto concessionnaire automobile pour une société  française
+# yvelines-autos concessionnaire automobile pour une société  française
 - [lien kanban](https://github.com/users/Zahifahd/projects/1/views/1)
 - [lien Roadmap](https://github.com/users/Zahifahd/projects/1/views/4)
 
@@ -33,4 +33,4 @@
 
 
 ##### Date de sortie du projet 
-yvelines-auto sortie prévue le mois MAI 2024 comme convenue avec la société  !
+yvelines-autos sortie prévue le mois MAI 2024 comme convenue avec la société  !
