@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="home.css">
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    .sidebar {
+      width: 300px; /* Largeur initiale de la sidebar ouverte */
+      transition: width 0.3s ease; /* Animation fluide de la transition */
+    }
+
+    .sidebar.close {
+      width: 88px; /* Largeur minimale de la sidebar fermée */
+    }
+
+    .main-content {
+      width: calc(100% - 250px); /* Largeur de la partie droite lorsque la sidebar est ouverte */
+      transition: width 0.3s ease; /* Animation fluide de la transition */
+    }
+
+    .sidebar.close ~ .main-content {
+      width: calc(100% - 88px); /* Largeur de la partie droite lorsque la sidebar est fermée */
+    }
+  </style>
+</head>
+
+<body>
+  <body>
+
+<header>
+  <nav class="top-navbar">
+    
+    <ul class="top-nav-links">
+      <li><a href="#">À Propos</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="support">Contact</a></li>
+    </ul>
+
+    <div class="social-links">
+    
+
+      <a href="#" class="phone">Tél: +212 616224336</a>
+    </div>
+        <div class="auth-links">
+    <button class="btn-53" onclick="redirectToLogin()">
+  <div class="original">Login</div>
+  <div class="letters">
+    <span>L</span>
+    <span>O</span>
+    <span>G</span>
+    <span>I</span>
+    <span>N</span>
+  </div>
+</button>
+
+<script>
+  function redirectToLogin() {
+    window.location.href = "login";
+  }
+</script>
+
+   <button class="btn-54" onclick="redirectToinscription()">
+  <div class="original">Signup</div>
+  <div class="letters">
+    
+    <span>S</span>
+    <span>I</span>
+    <span>G</span>
+    <span>N</span>
+    <span>U</span>
+    <span>P</span>
+  </div>
+</button>
+<script>
+  function redirectToinscription() {
+    window.location.href = "inscription";
+  }
+</script>
+
+    </div>
+  </nav>
+</header>
+
+  <nav class="sidebar open">
+    <!-- Contenu de la sidebar -->
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img src="logo.jpg" alt="">
+        </span>
+
+        <div class="text logo-text">
+          <span class="name">Yvelines-Autos</span>
+          <span class="profession">Concessionnaire Auto</span>
+        </div>
+      </div>
+
+      <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+      <div class="menu">
+
+        <li class="search-box">
+          <i class='bx bx-search icon'></i>
+          <input type="text" placeholder="Rechercher voiture">
+        </li>
+
+        <ul class="menu-links">
+          <li class="nav-link">
+            <a href="home">
+              <i class='bx bx-home-alt icon'></i>
+              <span class="text nav-text">Acceuil</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="#">
+              <i class='bx bx-heart icon'></i>
+              <span class="text nav-text">Likes</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="support">
+              <i class='bx bx-support icon'></i>
+              <span class="text nav-text">Support</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+   <div class="bottom-content">
+  <li class="logout">
+    <a href="#">
+      <i class='bx bx-log-out icon'></i>
+      <span class="text nav-text">Logout</span>
+    </a>
+  </li>
+
+  <li class="mode">
+    <div class="sun-moon">
+      <i class='bx bx-moon icon moon'></i>
+      <i class='bx bx-sun icon sun'></i>
+    </div>
+    <span class="mode-text text">Dark mode</span>
+
+    <div class="toggle-switch">
+      <span class="switch"></span>
+    </div>
+  </li>
+</div>
+
+    </div>
+
+  </nav>
+
+  <section class="main-content">
+    <!-- Contenu de la partie droite -->
+    <div class="car-options">
+      <div class="car-options-container">
+        <div class="car-option" data-target="buy">
+          <img src="vendeur 1.jpeg" alt="Buy a Car">
+          <h3>Acheter votre voiture de reves </h3>
+        </div>
+        <div class="car-option" data-target="rent">
+          <img src="vendeur 2.jpeg" alt="Rent a Car">
+          <h3>Louer la voiture de votre choix</h3>
+        </div>
+        <div class="car-option" data-target="sell">
+          <img src="vendeur 3.jpeg" alt="Sell Your Car">
+          <h3>Vendez votre voiture</h3>
+        </div>
+        <div class="car-option" data-target="new">
+          <img src="vendeur 4.jpeg" alt="New Cars">
+          <h3>Acheter Nos voitures Neuves</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="app.js"></script> <!-- Assurez-vous d'ajuster votre script JS en conséquence -->
+</body>
+
+</html>

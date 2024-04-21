@@ -1,0 +1,755 @@
+/* Google Font Import - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  /* ===== Colors ===== */
+  --body-color: #e4e9f7;
+  --sidebar-color: #fff;
+  --primary-color: #695cfe;
+  --primary-color-light: #f6f5ff;
+  --toggle-color: #ddd;
+  --text-color: #707070;
+
+  /* ====== Transition ====== */
+  --tran-03: all 0.2s ease;
+  --tran-03: all 0.3s ease;
+  --tran-04: all 0.3s ease;
+  --tran-05: all 0.3s ease;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--body-color);
+  transition: var(--tran-05);
+}
+
+::selection {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+body.dark {
+  --body-color: #18191a;
+  --sidebar-color: #242526;
+  --primary-color: #3a3b3c;
+  --primary-color-light: #3a3b3c;
+  --toggle-color: #fff;
+  --text-color: #ccc;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  padding: 10px 14px;
+  background: var(--sidebar-color);
+  transition: var(--tran-05);
+  z-index: 100;
+}
+.sidebar.close {
+  width: 88px;
+}
+
+/* ===== Reusable code - Here ===== */
+.sidebar li {
+  height: 50px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.sidebar header .image,
+.sidebar .icon {
+  min-width: 60px;
+  border-radius: 6px;
+}
+
+.sidebar .icon {
+  min-width: 60px;
+  border-radius: 6px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.sidebar .text,
+.sidebar .icon {
+  color: var(--text-color);
+  transition: var(--tran-03);
+}
+
+.sidebar .text {
+  font-size: 17px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 1;
+}
+.sidebar.close .text {
+  opacity: 0;
+}
+/* =========================== */
+
+.sidebar header {
+  position: relative;
+}
+
+.sidebar header .image-text {
+  display: flex;
+  align-items: center;
+}
+.sidebar header .logo-text {
+  display: flex;
+  flex-direction: column;
+}
+header .image-text .name {
+  margin-top: 2px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+header .image-text .profession {
+  font-size: 16px;
+  margin-top: -2px;
+  display: block;
+}
+
+.sidebar header .image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar header .image img {
+  width: 40px;
+  border-radius: 6px;
+}
+
+.sidebar header .toggle {
+  position: absolute;
+  top: 50%;
+  right: -25px;
+  transform: translateY(-50%) rotate(180deg);
+  height: 25px;
+  width: 25px;
+  background-color: var(--primary-color);
+  color: var(--sidebar-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  transition: var(--tran-05);
+}
+
+body.dark .sidebar header .toggle {
+  color: var(--text-color);
+}
+
+.sidebar.close .toggle {
+  transform: translateY(-50%) rotate(0deg);
+}
+
+.sidebar .menu {
+  margin-top: 40px;
+}
+
+.sidebar li.search-box {
+  border-radius: 6px;
+  background-color: var(--primary-color-light);
+  cursor: pointer;
+  transition: var(--tran-05);
+}
+
+.sidebar li.search-box input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: var(--primary-color-light);
+  color: var(--text-color);
+  border-radius: 6px;
+  font-size: 17px;
+  font-weight: 500;
+  transition: var(--tran-05);
+}
+.sidebar li a {
+  list-style: none;
+  height: 100%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: var(--tran-03);
+}
+
+.sidebar li a:hover {
+  background-color: var(--primary-color);
+}
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text {
+  color: var(--sidebar-color);
+}
+body.dark .sidebar li a:hover .icon,
+body.dark .sidebar li a:hover .text {
+  color: var(--text-color);
+}
+.menu-bar .bottom-content {
+  height: 200px ;/* Ajustez la hauteur selon vos besoins */
+}
+.menu-bar .bottom-content .toggle-switch {
+  position: fixed;
+  bottom: 0px; /* Ajustez la position verticale selon vos besoins */
+  right: 20px; /* Ajustez la position horizontale selon vos besoins */
+  z-index: 1000; /* Assurez-vous que le bouton est au-dessus des autres éléments */
+}
+
+
+.sidebar .menu-bar {
+  height: calc(100% - 55px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: scroll;
+}
+.menu-bar::-webkit-scrollbar {
+  display: none;
+}
+.sidebar .menu-bar .mode {
+  border-radius: 6px;
+  background-color: var(--primary-color-light);
+  position: relative;
+  transition: var(--tran-05);
+}
+
+.menu-bar .mode .sun-moon {
+  height: 50px;
+  width: 60px;
+}
+
+.mode .sun-moon i {
+  position: absolute;
+}
+.mode .sun-moon i.sun {
+  opacity: 0;
+}
+body.dark .mode .sun-moon i.sun {
+  opacity: 1;
+}
+body.dark .mode .sun-moon i.moon {
+  opacity: 0;
+}
+
+.menu-bar .bottom-content .toggle-switch {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.toggle-switch .switch {
+  position: relative;
+  height: 22px;
+  width: 40px;
+  border-radius: 25px;
+  background-color: var(--toggle-color);
+  transition: var(--tran-05);
+}
+
+.switch::before {
+  content: "";
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  background-color: var(--sidebar-color);
+  transition: var(--tran-04);
+}
+
+body.dark .switch::before {
+  left: 20px;
+}
+
+.home {
+  position: absolute;
+  top: 0;
+  top: 0;
+  left: 250px;
+  height: 100vh;
+  width: calc(100% - 250px);
+  background-color: var(--body-color);
+  transition: var(--tran-05);
+}
+.home .text {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--text-color);
+  padding: 12px 60px;
+}
+
+.sidebar.close ~ .home {
+  left: 78px;
+  height: 100vh;
+  width: calc(100% - 78px);
+}
+body.dark .home .text {
+  color: var(--text-color);
+}
+.car-options {
+  background-color: #fff;
+  padding: 20px;
+}
+
+.car-options h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.car-options-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.car-option {
+  width: calc(50% - 20px); /* Ajustez la largeur pour une disposition 2x2 */
+  margin-bottom: 20px; /* Ajustez l'espacement si nécessaire */
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Effet de transition */
+}
+
+.car-option img {
+  width: 120px; /* Ajustez la taille de l'image selon vos besoins */
+  height: 120px; /* Ajustez la taille de l'image selon vos besoins */
+  margin-bottom: 10px;
+}
+
+.car-option h3 {
+  font-size: 16px;
+  margin: 0;
+  color: #333;
+}
+
+/* Styles pour le header (barre de navigation en haut) */
+/* Styles pour la barre de navigation en haut */
+/* Styles pour le header */
+.top-navbar {
+  background-color: #695CFE;
+  color: #FFF;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999; /* Pour que le header soit au-dessus de tout */
+}
+
+/* Styles pour le reste de la page */
+.container {
+  display: flex;
+  flex-direction: column; /* Met la sidebar en dessous du header */
+  margin-top: 100px; /* Espace pour le header */
+}
+
+.sidebar {
+  width: 300px;
+  margin-top: 80px;  /* Largeur de la sidebar */
+  /* Tes autres styles pour la sidebar */
+}
+
+.main-content {
+  flex-grow: 1;
+  margin-top: 80px;  /* Remplit l'espace restant */
+  /* Tes autres styles pour la partie droite */
+}
+
+
+.top-nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.top-nav-links li {
+  margin-right: 20px;
+}
+
+.top-nav-links a {
+  text-decoration: none;
+  color: #FFF;
+  transition: color 0.3s ease;
+}
+
+.top-nav-links a:hover {
+  color: #F6F5FF;
+}
+
+.auth-links {
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #FFF;
+  color: #695CFE;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #695CFE;
+  color: #FFF;
+}
+
+.btn.btn-outline {
+  background-color: transparent;
+  border: 2px solid #FFF;
+}
+
+.btn.btn-outline:hover {
+  background-color: #FFF;
+  color: #695CFE;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+}
+
+.social-icon {
+  color: #FFF;
+  font-size: 20px;
+  margin-right: 10px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #F6F5FF;
+}
+
+.phone {
+  color: #FFF;
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+
+.car-option:nth-child(odd) { /* Odd-numbered tiles */
+  margin-right: 20px; /* Add right margin for odd tiles */
+}
+.main-content {
+  transition: margin-left 0.3s ease; /* Animation fluide de la transition */
+  margin-left: 250px; /* Largeur initiale lorsque la sidebar est ouverte */
+}
+
+.sidebar.close ~ .main-content {
+  margin-left: 88px; /* Largeur lorsque la sidebar est fermée */
+}
+.car-option img {
+  width: 120px; /* Ajustez la largeur selon vos besoins */
+  height: 120px; /* Ajustez la hauteur selon vos besoins */
+}
+/* Styles pour le mode sombre */
+/* Styles pour les options de voitures en mode sombre */
+body.dark .car-options {
+  background-color: #333; /* Fond sombre pour la section des options de voitures */
+  padding: 20px; /* Espacement intérieur */
+}
+
+body.dark .car-options-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+body.dark .car-option {
+  width: calc(50% - 20px); /* Largeur pour 2x2 grid */
+  margin-bottom: 20px; /* Espacement entre les options */
+  padding: 15px; /* Espacement intérieur */
+  background-color: #fff; /* Fond blanc pour chaque option */
+  border-radius: 5px; /* Coins arrondis */
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  text-align: center; /* Centrer le contenu */
+  cursor: pointer; /* Curseur pointer au survol */
+  transition: background-color 0.3s ease; /* Transition de couleur au survol */
+}
+
+body.dark .car-option:nth-child(odd) {
+  margin-right: 20px; /* Espacement à droite pour chaque option impaire */
+}
+
+body.dark .car-option img {
+  width: 120px; /* Taille fixe pour les images en mode sombre */
+  height: 120px; /* Hauteur fixe pour les images en mode sombre */
+}
+
+body.dark .car-option h3 {
+  color: #333; /* Couleur du texte en mode sombre */
+}
+
+/*button login signup home */
+.btn-53,
+.btn-53 *,
+.btn-53 :after,
+.btn-53 :before,
+.btn-53:after,
+.btn-53:before {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+
+.btn-53 {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: button;
+  background-color: white;
+  background-image: none;
+  color: #695CFE;
+  cursor: pointer;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 100%;
+  line-height: 1.5;
+  margin: 0;
+  -webkit-mask-image: -webkit-radial-gradient(#695CFE, #695CFE);
+  padding: 0;
+}
+
+.btn-53:disabled {
+  cursor: default;
+}
+
+.btn-53:-moz-focusring {
+  outline: auto;
+}
+
+.btn-53 svg {
+  display: block;
+  vertical-align: middle;
+}
+
+.btn-53 [hidden] {
+  display: none;
+}
+
+.btn-53 {
+  border: 1px solid;
+  border-radius: 999px;
+  box-sizing: border-box;
+  display: block;
+  font-weight: 900;
+  overflow: hidden;
+  padding: 1.2rem 3rem;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.btn-53 .original {
+  background: #695CFE;
+  color: white;
+  display: grid;
+  inset: 0;
+  place-content: center;
+  position: absolute;
+  transition: transform 0.2s cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+.btn-53:hover .original {
+  transform: translateY(100%);
+}
+
+.btn-53 .letters {
+  display: inline-flex;
+}
+
+.btn-53 span {
+  opacity: 0;
+  transform: translateY(-15px);
+  transition: transform 0.2s cubic-bezier(0.87, 0, 0.13, 1), opacity 0.2s;
+}
+
+.btn-53 span:nth-child(2n) {
+  transform: translateY(15px);
+}
+
+.btn-53:hover span {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-53:hover span:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.btn-53:hover span:nth-child(3) {
+  transition-delay: 0.2s;
+}
+
+.btn-53:hover span:nth-child(4) {
+  transition-delay: 0.3s;
+}
+
+.btn-53:hover span:nth-child(5) {
+  transition-delay: 0.4s;
+}
+
+.btn-53:hover span:nth-child(6) {
+  transition-delay: 0.5s;
+}
+
+.btn-54,
+.btn-54 *,
+.btn-54 :after,
+.btn-54 :before,
+.btn-54:after,
+.btn-54:before {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+
+.btn-54 {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: button;
+  background-color: white;
+  background-image: none;
+  color: #695CFE;
+  cursor: pointer;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 100%;
+  line-height: 1.5;
+  margin: 0;
+  -webkit-mask-image: -webkit-radial-gradient(#695CFE, #695CFE);
+  padding: 0;
+}
+
+.btn-54:disabled {
+  cursor: default;
+}
+
+.btn-54:-moz-focusring {
+  outline: auto;
+}
+
+.btn-54 svg {
+  display: block;
+  vertical-align: middle;
+}
+
+.btn-54 [hidden] {
+  display: none;
+}
+
+.btn-54 {
+  border: 1px solid;
+  border-radius: 999px;
+  box-sizing: border-box;
+  display: block;
+  font-weight: 900;
+  overflow: hidden;
+  padding: 1.2rem 3rem;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.btn-54 .original {
+  background: #695CFE;
+  color: white;
+  display: grid;
+  inset: 0;
+  place-content: center;
+  position: absolute;
+  transition: transform 0.2s cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+.btn-54:hover .original {
+  transform: translateY(100%);
+}
+
+.btn-54 .letters {
+  display: inline-flex;
+}
+
+.btn-54 span {
+  opacity: 0;
+  transform: translateY(-15px);
+  transition: transform 0.2s cubic-bezier(0.87, 0, 0.13, 1), opacity 0.2s;
+}
+
+.btn-54 span:nth-child(2n) {
+  transform: translateY(15px);
+}
+
+.btn-54:hover span {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-54:hover span:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.btn-54:hover span:nth-child(3) {
+  transition-delay: 0.2s;
+}
+
+.btn-54:hover span:nth-child(4) {
+  transition-delay: 0.3s;
+}
+
+.btn-54:hover span:nth-child(5) {
+  transition-delay: 0.4s;
+}
+
+.btn-54:hover span:nth-child(6) {
+  transition-delay: 0.5s;
+}
+
+/* Styles pour l'icône Instagram */
+.social-icon.instagram {
+  color: #833AB4; /* Couleur Instagram */
+}
+
+/* Styles pour l'icône Facebook */
+.social-icon.facebook {
+  color: #3B5998; /* Couleur Facebook */
+}
+
+

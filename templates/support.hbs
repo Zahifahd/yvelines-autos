@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="support.css">
+    <title>Support</title>
+</head>
+<body>
+<section class="contact-section">
+  <div class="contact-intro">
+    <h2 class="contact-title">Contact</h2>
+    <p class="contact-description">
+      Remplissez le formulaire ci dessous et en fera en sorte de vous repondre le plus tot possible
+    </p>
+  </div>
+
+  <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+
+    <input type="hidden" name="access_key" value="2128cf19-6432-4955-8ba1-d6fdae3533f5" />
+    <div class="form-group-container">
+      <div class="form-group">
+       <form>
+  <div class="form-group">
+    <label for="name" class="form-label">Nom & Prénom</label>
+    <input id="name" name="name" class="form-input" placeholder="Votre Nom & Prénom" type="text" required />
+  </div>
+  <div class="form-group">
+    <label for="email" class="form-label">Email</label>
+    <input id="email" name="email" class="form-input" placeholder="Votre Email" type="email" required />
+  </div>
+  <div class="form-group">
+    <label for="phone" class="form-label">Téléphone</label>
+    <input id="phone" name="phone" class="form-input" placeholder="+212 616224336" type="text" required />
+  </div>
+  <div class="form-group">
+    <label for="message" class="form-label">Message</label>
+    <textarea class="form-textarea" id="message" name="message" placeholder="Votre Message" required></textarea>
+  </div>
+  <button class="form-submit" type="submit">Envoyer</button>
+</form>
+
+</section>
+</body>
+</html>
