@@ -225,24 +225,14 @@
             
 
         </select>
-       <div>
-    <label for="demande">Quel est l'objet de votre demande ?</label><br>
-    <label for="projet_achat">
-        <input type="checkbox" name="purpose[]" value="projet_achat" id="projet_achat">
-        Un projet d'achat
-    </label><br>
-    <label for="essai_vehicule">
-        <input type="checkbox" name="purpose[]" value="essai_vehicule" id="essai_vehicule">
-        Un essai de véhicule
-    </label><br>
-    <label for="reprise_vehicule">
-        <input type="checkbox" name="purpose[]" value="reprise_vehicule" id="reprise_vehicule">
-        Une reprise de véhicule
-    </label><br>
-</div>
+        <input type="text" name="postalcode" placeholder="Code Postal" required>
+        <div>
+            <div class="checkbox-group">
+            <input type="checkbox" name="purpose[]" value="achat" id="achat">
+            <label for="achat">Achat</label>
+            <input type="checkbox" name="purpose[]" value="vente" id="vente">
+            <label for="vente">Vente</label>
+        </div></div>
         <button type="submit" class="submit-btn">S'inscrire</button>
     </form>
 </div>
-
-</body>
-</html>

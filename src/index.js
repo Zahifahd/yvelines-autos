@@ -31,6 +31,10 @@ app.get("/support", (req, res) => {
 app.get("/otp", (req, res) => {
     res.render("otp");
 });
+app.get("/Apropos", (req, res) => {
+    res.render("Apropos");
+});
+
 
 
 app.post("/inscription", async (req, res) => {

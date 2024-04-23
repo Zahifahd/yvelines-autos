@@ -1,0 +1,51 @@
+/* styles.css */
+
+/* Styles pour le conteneur principal */
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  /* Styles pour le conteneur du logo */
+  .logo-container {
+    margin-bottom: 20px;
+  }
+  
+  /* Styles pour l'image du logo */
+  .logo-container img {
+    width: 200px; /* Ajustez la taille du logo selon vos besoins */
+    border-radius: 10px; /* Coins arrondis pour l'image */
+  }
+  
+  /* Styles pour le conteneur du texte */
+  .text-container {
+    text-align: center;
+  }
+  
+  /* Styles pour les titres */
+  h1, h2, h3 {
+    margin-bottom: 10px;
+  }
+  
+  /* Styles pour les paragraphes */
+  p {
+    margin-bottom: 5px;
+  }
+  
+  /* Styles pour les liens */
+  a {
+    color: #ffa500; /* Couleur orange pour les liens */
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
