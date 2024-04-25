@@ -5,13 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vente de voiture</title>
     <link rel="stylesheet" href="datavoiture.css">
+     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 </head>
+<style>
+    .sidebar {
+      width: 300px; /* Largeur initiale de la sidebar ouverte */
+      transition: width 0.3s ease; /* Animation fluide de la transition */
+    }
+
+    .sidebar.close {
+      width: 88px; /* Largeur minimale de la sidebar fermée */
+    }
+
+    .main {
+      width: calc(100% - 250px); /* Largeur de la partie droite lorsque la sidebar est ouverte */
+      transition: width 0.3s ease; /* Animation fluide de la transition */
+    }
+
+    .sidebar.close ~ .maint {
+      width: calc(100% - 88px); /* Largeur de la partie droite lorsque la sidebar est fermée */
+    }
+  </style>
 <body>
     <header>
     <img src="logo.jpg" alt="Nom de votre entreprise">
     <h1>Annonce de vente de voiture</h1>
 </header>
+<nav class="sidebar open">
+    <!-- Contenu de la sidebar -->
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img src="logo.jpg" alt="">
+        </span>
 
+        <div class="text logo-text">
+          <span class="name">Yvelines-Auto</span>
+          <span class="profession">Concessionnaire Auto</span>
+        </div>
+      </div>
+
+      <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+      <div class="menu">
+
+        <li class="search-box">
+          <i class='bx bx-search icon'></i>
+          <input type="text" placeholder="Rechercher voiture">
+        </li>
+
+        <ul class="menu-links">
+          <li class="nav-link">
+            <a href="home">
+              <i class='bx bx-home-alt icon'></i>
+              <span class="text nav-text">Acceuil</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="#">
+              <i class='bx bx-heart icon'></i>
+              <span class="text nav-text">Likes</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="support">
+              <i class='bx bx-support icon'></i>
+              <span class="text nav-text">Support</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+   <div class="bottom-content">
+  <li class="logout">
+    <a href="#">
+      <i class='bx bx-log-out icon'></i>
+      <span class="text nav-text">Logout</span>
+    </a>
+  </li>
+
+  <li class="mode">
+    <div class="sun-moon">
+      <i class='bx bx-moon icon moon'></i>
+      <i class='bx bx-sun icon sun'></i>
+    </div>
+    <span class="mode-text text">Dark mode</span>
+
+    <div class="toggle-switch">
+      <span class="switch"></span>
+    </div>
+  </li>
+</div>
+
+    </div>
+
+  </nav>
     <main>
         <section id="vehicle-details">
             <h2>Informations sur le véhicule</h2>
@@ -53,4 +146,26 @@
         <p>&copy; 2024 Vente de Voiture. Tous droits réservés.</p>
     </footer>
 </body>
+<script>
+    const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+    })
+    searchBtn.addEventListener("click", () => {
+      sidebar.classList.remove("close");
+    })
+    modeSwitch.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      if (body.classList.contains("dark")) {
+        modeText.innerText = "Light mode";
+      } else {
+        modeText.innerText = "Dark mode";
+      }
+    });
+  </script>
 </html>
