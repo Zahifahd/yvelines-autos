@@ -4,6 +4,8 @@ const path = require("path");
 const collection = require("./mongodb");
 const bcrypt = require('bcrypt');
 const otpGenerator = require('otp-generator');
+const VenteVoiture = require("./voiture");
+
 
 app.use(express.static("public"));
 const templatePath = path.join(__dirname, "../templates");
@@ -27,14 +29,18 @@ app.get("/home", (req, res) => {
 app.get("/support", (req, res) => {
     res.render("support");
 });
-
+app.get("/datavoiture", (req, res) => {
+    res.render("datavoiture");
+});
 app.get("/otp", (req, res) => {
     res.render("otp");
 });
 app.get("/Apropos", (req, res) => {
     res.render("Apropos");
 });
-
+app.get("/confirmation-vente", (req, res) => {
+    res.render("confirmation-vente");
+});
 
 
 app.post("/inscription", async (req, res) => {
@@ -54,6 +60,7 @@ app.post("/inscription", async (req, res) => {
         res.status(500).send("Une erreur s'est produite lors de l'inscription. Veuillez réessayer.");
     }
 });
+
 
 app.post("/login", async (req, res) => {
     try {
@@ -80,6 +87,37 @@ app.post("/login", async (req, res) => {
     } catch (err) {
         console.error("Erreur lors de la connexion:", err);
         res.send("Erreur lors de la connexion");
+    }
+});
+app.post("/datavoiture", async (req, res) => {
+    try {
+        const { brand, model, year, mileage, color, price, description, "contact-name": contactName, "contact-email": contactEmail, "contact-phone": contactPhone } = req.body;
+
+        if (!brand || !model || !year || !mileage || !color || !price || !description || !contactName || !contactEmail || !contactPhone) {
+            throw new Error("Veuillez remplir tous les champs du formulaire.");
+        }
+
+        // Créer une nouvelle instance de VenteVoiture avec les données reçues
+        const nouvelleVoiture = new VenteVoiture({
+            brand,
+            model,
+            year: parseInt(year), // Convertir l'année en nombre
+            mileage: parseInt(mileage), // Convertir le kilométrage en nombre
+            color,
+            price: parseInt(price), // Convertir le prix en nombre
+            description,
+            contactName,
+            contactEmail,
+            contactPhone
+        });
+
+        // Enregistrer la nouvelle voiture dans la base de données
+        await nouvelleVoiture.save();
+
+        res.render("confirmation-vente", { message: "Votre annonce de vente a été enregistrée avec succès." });
+    } catch (error) {
+        console.error("Une erreur s'est produite lors de la soumission du formulaire de vente de voitures :", error);
+        res.status(500).send("Une erreur s'est produite lors de la soumission du formulaire de vente de voitures. Veuillez réessayer.");
     }
 });
 
