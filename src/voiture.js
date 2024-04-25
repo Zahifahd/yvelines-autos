@@ -17,10 +17,6 @@ const VenteVoitureSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  color: {
-    type: String,
-    required: true
-  },
   price: {
     type: Number,
     required: true
@@ -33,13 +29,29 @@ const VenteVoitureSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  contactEmail: {
-    type: String,
-    required: true
-  },
-  contactPhone: {
-    type: String,
-    required: true
+  carCondition: {
+    firstRegistration: {
+      type: Date,
+      required: true
+    },
+    fuel: {
+      type: String,
+      enum: ["essence", "diesel", "electrique"],
+      required: true
+    },
+    gearbox: {
+      type: String,
+      enum: ["manuelle", "automatique"],
+      required: true
+    },
+    taxPower: {
+      type: Number,
+      required: true
+    },
+    dinPower: {
+      type: Number,
+      required: true
+    }
   }
 });
 

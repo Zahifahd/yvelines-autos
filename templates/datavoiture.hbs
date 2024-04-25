@@ -5,106 +5,207 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vente de voiture</title>
     <link rel="stylesheet" href="datavoiture.css">
-     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <style>
     .sidebar {
-      width: 300px; /* Largeur initiale de la sidebar ouverte */
-      transition: width 0.3s ease; /* Animation fluide de la transition */
+        width: 300px; /* Largeur initiale de la sidebar ouverte */
+        transition: width 0.3s ease; /* Animation fluide de la transition */
     }
 
     .sidebar.close {
-      width: 88px; /* Largeur minimale de la sidebar fermée */
+        width: 88px; /* Largeur minimale de la sidebar fermée */
     }
 
     .main {
-      width: calc(100% - 250px); /* Largeur de la partie droite lorsque la sidebar est ouverte */
-      transition: width 0.3s ease; /* Animation fluide de la transition */
+        width: calc(100% - 250px); /* Largeur de la partie droite lorsque la sidebar est ouverte */
+        transition: width 0.3s ease; /* Animation fluide de la transition */
     }
 
-    .sidebar.close ~ .maint {
-      width: calc(100% - 88px); /* Largeur de la partie droite lorsque la sidebar est fermée */
+    .sidebar.close ~ .main {
+        width: calc(100% - 88px); /* Largeur de la partie droite lorsque la sidebar est fermée */
     }
-  </style>
+
+    /* Ajout de styles pour la sidebar */
+    nav {
+        display: flex;
+        flex-direction: column;
+        background-color: #333;
+        color: #fff;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .image-text {
+        display: flex;
+        align-items: center;
+    }
+
+    .image-text .image img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .menu-bar {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu-links {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .nav-link a {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .nav-link a:hover {
+        background-color: #555;
+    }
+
+    .icon {
+        margin-right: 10px;
+    }
+
+    .bottom-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 10px;
+        border-top: 1px solid #555;
+    }
+
+    .logout,
+    .mode {
+        margin-top: 10px;
+    }
+
+    .toggle-switch {
+        display: flex;
+        align-items: center;
+    }
+
+    .switch {
+        width: 30px;
+        height: 15px;
+        background-color: #ccc;
+        border-radius: 10px;
+        margin-left: 10px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .switch::before {
+        content: '';
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        background-color: #fff;
+        border-radius: 50%;
+        top: -1px;
+        left: -1px;
+        transition: transform 0.3s ease;
+    }
+
+    .dark .switch::before {
+        transform: translateX(15px);
+    }
+</style>
 <body>
     <header>
-    <img src="logo.jpg" alt="Nom de votre entreprise">
-    <h1>Annonce de vente de voiture</h1>
-</header>
-<nav class="sidebar open">
-    <!-- Contenu de la sidebar -->
-    <header>
-      <div class="image-text">
-        <span class="image">
-          <img src="logo.jpg" alt="">
-        </span>
-
-        <div class="text logo-text">
-          <span class="name">Yvelines-Auto</span>
-          <span class="profession">Concessionnaire Auto</span>
-        </div>
-      </div>
-
-      <i class='bx bx-chevron-right toggle'></i>
+        <img src="logo.jpg" alt="Nom de votre entreprise">
+        <h1>Annonce de vente de voiture</h1>
     </header>
+    <nav class="sidebar open">
+        <!-- Contenu de la sidebar -->
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="logo.jpg" alt="">
+                </span>
 
-    <div class="menu-bar">
-      <div class="menu">
+                <div class="text logo-text">
+                    <span class="name">Yvelines-Auto</span>
+                    <span class="profession">Concessionnaire Auto</span>
+                </div>
+            </div>
 
-        <li class="search-box">
-          <i class='bx bx-search icon'></i>
-          <input type="text" placeholder="Rechercher voiture">
-        </li>
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
 
-        <ul class="menu-links">
-          <li class="nav-link">
-            <a href="home">
-              <i class='bx bx-home-alt icon'></i>
-              <span class="text nav-text">Acceuil</span>
-            </a>
-          </li>
+        <div class="menu-bar">
+            <div class="menu">
 
-          <li class="nav-link">
-            <a href="#">
-              <i class='bx bx-heart icon'></i>
-              <span class="text nav-text">Likes</span>
-            </a>
-          </li>
+                <li class="search-box">
+                    <i class='bx bx-search icon'></i>
+                    <input type="text" placeholder="Rechercher voiture">
+                </li>
 
-          <li class="nav-link">
-            <a href="support">
-              <i class='bx bx-support icon'></i>
-              <span class="text nav-text">Support</span>
-            </a>
-          </li>
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="home">
+                            <i class='bx bx-home-alt icon'></i>
+                            <span class="text nav-text">Acceuil</span>
+                        </a>
+                    </li>
 
-        </ul>
-      </div>
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-heart icon'></i>
+                            <span class="text nav-text">Likes</span>
+                        </a>
+                    </li>
 
-   <div class="bottom-content">
-  <li class="logout">
-    <a href="#">
-      <i class='bx bx-log-out icon'></i>
-      <span class="text nav-text">Logout</span>
-    </a>
-  </li>
+                    <li class="nav-link">
+                        <a href="support">
+                            <i class='bx bx-support icon'></i>
+                            <span class="text nav-text">Support</span>
+                        </a>
+                    </li>
 
-  <li class="mode">
-    <div class="sun-moon">
-      <i class='bx bx-moon icon moon'></i>
-      <i class='bx bx-sun icon sun'></i>
-    </div>
-    <span class="mode-text text">Dark mode</span>
+                </ul>
+            </div>
 
-    <div class="toggle-switch">
-      <span class="switch"></span>
-    </div>
-  </li>
-</div>
+            <div class="bottom-content">
+                <li class="logout">
+                    <a href="#">
+                        <i class='bx bx-log-out icon'></i>
+                        <span class="text nav-text">Logout</span>
+                    </a>
+                </li>
 
-    </div>
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Dark mode</span>
 
-  </nav>
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </div>
+
+        </div>
+
+    </nav>
     <main>
         <section id="vehicle-details">
             <h2>Informations sur le véhicule</h2>
@@ -121,22 +222,37 @@
                 <label for="mileage">Kilométrage :</label>
                 <input type="number" id="mileage" name="mileage" min="0" required>
 
-                <label for="color">Couleur :</label>
-                <input type="text" id="color" name="color" required>
-
                 <label for="price">Prix :</label>
                 <input type="number" id="price" name="price" min="0" required>
 
                 <label for="contact-name">Nom du contact :</label>
                 <input type="text" id="contact-name" name="contact-name" required>
 
-                <label for="contact-email">Email du contact :</label>
-                <input type="email" id="contact-email" name="contact-email" required>
-
-                <label for="contact-phone">Téléphone du contact :</label>
-                <input type="tel" id="contact-phone" name="contact-phone" required>
                 <label for="description">Description :</label>
                 <textarea id="description" name="description" rows="5" required></textarea>
+
+                <label for="car-condition">Conditions :</label>
+                <div id="car-condition">
+                    <label for="first-registration">Date de première mise en circulation :</label>
+                    <input type="date" id="first-registration" name="first-registration" required>
+<label for="fuel">Carburant :</label>
+<select id="fuel" name="fuel" required>
+    <option value="essence">Essence</option>
+    <option value="diesel">Diesel</option>
+    <option value="electrique">Électrique</option>
+</select><br>
+
+<label for="gearbox">Boîte à vitesse :</label>
+<select id="gearbox" name="gearbox" required>
+    <option value="manuelle">Manuelle</option>
+    <option value="automatique">Automatique</option>
+</select><br>
+
+<label for="tax-power">Puissance fiscale :</label>
+<input type="number" id="tax-power" name="tax-power" min="1" required><br>
+
+<label for="din-power">Puissance DIN :</label>
+<input type="number" id="din-power" name="din-power" min="1" required><br>
 
                 <button type="submit">Publier l'annonce</button>
             </form>
@@ -145,27 +261,27 @@
     <footer>
         <p>&copy; 2024 Vente de Voiture. Tous droits réservés.</p>
     </footer>
+    <script>
+        const body = document.querySelector('body'),
+            sidebar = body.querySelector('nav'),
+            toggle = body.querySelector(".toggle"),
+            searchBtn = body.querySelector(".search-box"),
+            modeSwitch = body.querySelector(".toggle-switch"),
+            modeText = body.querySelector(".mode-text");
+        toggle.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+        })
+        searchBtn.addEventListener("click", () => {
+            sidebar.classList.remove("close");
+        })
+        modeSwitch.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            if (body.classList.contains("dark")) {
+                modeText.innerText = "Light mode";
+            } else {
+                modeText.innerText = "Dark mode";
+            }
+        });
+    </script>
 </body>
-<script>
-    const body = document.querySelector('body'),
-      sidebar = body.querySelector('nav'),
-      toggle = body.querySelector(".toggle"),
-      searchBtn = body.querySelector(".search-box"),
-      modeSwitch = body.querySelector(".toggle-switch"),
-      modeText = body.querySelector(".mode-text");
-    toggle.addEventListener("click", () => {
-      sidebar.classList.toggle("close");
-    })
-    searchBtn.addEventListener("click", () => {
-      sidebar.classList.remove("close");
-    })
-    modeSwitch.addEventListener("click", () => {
-      body.classList.toggle("dark");
-      if (body.classList.contains("dark")) {
-        modeText.innerText = "Light mode";
-      } else {
-        modeText.innerText = "Dark mode";
-      }
-    });
-  </script>
 </html>
