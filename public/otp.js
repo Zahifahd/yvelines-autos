@@ -30,15 +30,18 @@ function sendOTP(){
             const otp_inp = document.getElementById('otp_inp');
             const otp_btn = document.getElementById('otp-btn');
 
-            otp_btn.addEventListener('click',()=>{
-                // now check whether sent email is valid
-                if(otp_inp.value == otp_val){
-                    alert("Email address verified...");
+            otp_btn.addEventListener('click', () => {
+                // Vérifier si l'OTP saisi correspond à celui généré précédemment
+                if (otp_inp.value == otp_val) {
+                    // Envoyer une requête AJAX ou utiliser une autre méthode pour valider l'OTP côté serveur
+                    // Si l'OTP est valide, effectuer l'action souhaitée (par exemple, authentification réussie)
+                    alert("Email address verified. Double authentication successful!");
+                } else {
+                    // Si l'OTP est invalide, afficher un message d'erreur
+                    alert("Invalid OTP. Double authentication failed.");
                 }
-                else{
-                    alert("Invalid OTP");
-                }
-            })
+            });
+            
         }
       }
     );
