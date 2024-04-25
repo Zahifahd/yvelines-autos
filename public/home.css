@@ -11,7 +11,7 @@
   /* ===== Colors ===== */
   --body-color: #e4e9f7;
   --sidebar-color: #fff;
-  --primary-color: #695cfe;
+  --primary-color: grey;
   --primary-color-light: #f6f5ff;
   --toggle-color: #ddd;
   --text-color: #707070;
@@ -50,7 +50,10 @@ body.dark {
   top: 0;
   left: 0;
   height: 100%;
-  width: 250px;
+
+  width: 20%;
+
+
   padding: 10px 14px;
   background: var(--sidebar-color);
   transition: var(--tran-05);
@@ -318,51 +321,13 @@ body.dark .switch::before {
 body.dark .home .text {
   color: var(--text-color);
 }
-.car-options {
-  background-color: #fff;
-  padding: 20px;
-}
 
-.car-options h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-}
-
-.car-options-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.car-option {
-  width: calc(50% - 20px); /* Ajustez la largeur pour une disposition 2x2 */
-  margin-bottom: 20px; /* Ajustez l'espacement si nécessaire */
-  padding: 15px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease; /* Effet de transition */
-}
-
-.car-option img {
-  width: 120px; /* Ajustez la taille de l'image selon vos besoins */
-  height: 120px; /* Ajustez la taille de l'image selon vos besoins */
-  margin-bottom: 10px;
-}
-
-.car-option h3 {
-  font-size: 16px;
-  margin: 0;
-  color: #333;
-}
 
 /* Styles pour le header (barre de navigation en haut) */
 /* Styles pour la barre de navigation en haut */
 /* Styles pour le header */
 .top-navbar {
-  background-color: #695CFE;
+  background-color: grey;
   color: #FFF;
   padding: 10px 20px;
   display: flex;
@@ -390,6 +355,7 @@ body.dark .home .text {
 
 .main-content {
   flex-grow: 1;
+  width: 80%;
   margin-top: 80px;  /* Remplit l'espace restant */
   /* Tes autres styles pour la partie droite */
 }
@@ -425,14 +391,14 @@ body.dark .home .text {
   display: inline-block;
   padding: 10px 20px;
   background-color: #FFF;
-  color: #695CFE;
+  color: grey;
   border-radius: 5px;
   text-decoration: none;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn:hover {
-  background-color: #695CFE;
+  background-color: grey;
   color: #FFF;
 }
 
@@ -443,7 +409,7 @@ body.dark .home .text {
 
 .btn.btn-outline:hover {
   background-color: #FFF;
-  color: #695CFE;
+  color: grey;
 }
 
 .social-links {
@@ -487,41 +453,7 @@ body.dark .home .text {
 }
 /* Styles pour le mode sombre */
 /* Styles pour les options de voitures en mode sombre */
-body.dark .car-options {
-  background-color: #333; /* Fond sombre pour la section des options de voitures */
-  padding: 20px; /* Espacement intérieur */
-}
 
-body.dark .car-options-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-body.dark .car-option {
-  width: calc(50% - 20px); /* Largeur pour 2x2 grid */
-  margin-bottom: 20px; /* Espacement entre les options */
-  padding: 15px; /* Espacement intérieur */
-  background-color: #fff; /* Fond blanc pour chaque option */
-  border-radius: 5px; /* Coins arrondis */
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* Ombre légère */
-  text-align: center; /* Centrer le contenu */
-  cursor: pointer; /* Curseur pointer au survol */
-  transition: background-color 0.3s ease; /* Transition de couleur au survol */
-}
-
-body.dark .car-option:nth-child(odd) {
-  margin-right: 20px; /* Espacement à droite pour chaque option impaire */
-}
-
-body.dark .car-option img {
-  width: 120px; /* Taille fixe pour les images en mode sombre */
-  height: 120px; /* Hauteur fixe pour les images en mode sombre */
-}
-
-body.dark .car-option h3 {
-  color: #333; /* Couleur du texte en mode sombre */
-}
 
 /*button login signup home */
 .btn-53,
@@ -539,7 +471,7 @@ body.dark .car-option h3 {
   -webkit-appearance: button;
   background-color: white;
   background-image: none;
-  color: #695CFE;
+  color: grey;
   cursor: pointer;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
@@ -547,7 +479,7 @@ body.dark .car-option h3 {
   font-size: 100%;
   line-height: 1.5;
   margin: 0;
-  -webkit-mask-image: -webkit-radial-gradient(#695CFE, #695CFE);
+  -webkit-mask-image: -webkit-radial-gradient(grey, grey);
   padding: 0;
 }
 
@@ -581,7 +513,7 @@ body.dark .car-option h3 {
 }
 
 .btn-53 .original {
-  background: #695CFE;
+  background: grey;
   color: white;
   display: grid;
   inset: 0;
@@ -648,7 +580,7 @@ body.dark .car-option h3 {
   -webkit-appearance: button;
   background-color: white;
   background-image: none;
-  color: #695CFE;
+  color: grey;
   cursor: pointer;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
@@ -656,7 +588,7 @@ body.dark .car-option h3 {
   font-size: 100%;
   line-height: 1.5;
   margin: 0;
-  -webkit-mask-image: -webkit-radial-gradient(#695CFE, #695CFE);
+  -webkit-mask-image: -webkit-radial-gradient(grey, grey);
   padding: 0;
 }
 
@@ -690,7 +622,7 @@ body.dark .car-option h3 {
 }
 
 .btn-54 .original {
-  background: #695CFE;
+  background: grey;
   color: white;
   display: grid;
   inset: 0;
@@ -750,6 +682,137 @@ body.dark .car-option h3 {
 /* Styles pour l'icône Facebook */
 .social-icon.facebook {
   color: #3B5998; /* Couleur Facebook */
+}
+
+main-content {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+}
+.car-carousel {
+  background-color: white;
+  width: 100%; /* Utilisez 100% pour occuper toute la largeur de la page */
+  overflow: hidden;
+}
+
+.car-carousel .swiper-wrapper {
+  display: flex;
+  width: max-content; /* Permet au contenu de s'étendre sur toute la largeur */
+}
+
+.car-carousel img {
+  margin-right: 10px;
+  flex-shrink: 0; /* Empêche les images de rétrécir pour s'adapter */
+}
+
+
+
+
+
+
+
+
+
+
+
+.description {
+  position: relative;
+  display: inline-block;
+}
+
+.description img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.description .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Couleur semi-transparente */
+}
+
+.description .text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  padding: 20px; /* Ajoutez du padding pour plus de lisibilité */
+  max-width: 80%; /* Limitez la largeur du texte pour qu'il reste lisible */
+}
+
+.description .text p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+/* CSS pour les styles des carreaux d'options de voiture */
+
+/* Styles pour les carreaux d'options de voiture */
+.car-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.car-options-container {
+  display: flex;
+  gap: 20px;
+}
+
+.car-option {
+  margin-top: -200px;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.car-option:hover {
+  transform: scale(1.1);
+}
+
+.car-option img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.car-option-overlay {
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+  opacity: 0; /* Initialement invisible */
+  transition: opacity 0.3s ease;
+}
+
+.car-option:hover .car-option-overlay {
+  opacity: 1; /* Apparition de l'overlay au survol */
+}
+
+.car-option h3 {
+  margin: 0;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
 }
 
 
