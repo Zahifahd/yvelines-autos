@@ -89,29 +89,33 @@ app.post("/login", async (req, res) => {
         res.send("Erreur lors de la connexion");
     }
 });
+
+
 app.post("/datavoiture", async (req, res) => {
     try {
-        const { brand, model, year, mileage, color, price, description, "contact-name": contactName, "contact-email": contactEmail, "contact-phone": contactPhone } = req.body;
+        const { brand, model, year, mileage, price, description, 'contact-name': contactName, 'first-registration': firstRegistration, fuel, gearbox, 'tax-power': taxPower, 'din-power': dinPower } = req.body;
 
-        if (!brand || !model || !year || !mileage || !color || !price || !description || !contactName || !contactEmail || !contactPhone) {
+        if (!brand || !model || !year || !mileage || !price || !description || !contactName || !firstRegistration || !fuel || !gearbox || !taxPower || !dinPower) {
             throw new Error("Veuillez remplir tous les champs du formulaire.");
         }
 
-        // Créer une nouvelle instance de VenteVoiture avec les données reçues
         const nouvelleVoiture = new VenteVoiture({
             brand,
             model,
-            year: parseInt(year), // Convertir l'année en nombre
-            mileage: parseInt(mileage), // Convertir le kilométrage en nombre
-            color,
-            price: parseInt(price), // Convertir le prix en nombre
+            year: parseInt(year),
+            mileage: parseInt(mileage),
+            price: parseInt(price),
             description,
             contactName,
-            contactEmail,
-            contactPhone
+            carCondition: {
+                firstRegistration: new Date(firstRegistration),
+                fuel,
+                gearbox,
+                taxPower: parseInt(taxPower),
+                dinPower: parseInt(dinPower)
+            }
         });
 
-        // Enregistrer la nouvelle voiture dans la base de données
         await nouvelleVoiture.save();
 
         res.render("confirmation-vente", { message: "Votre annonce de vente a été enregistrée avec succès." });
@@ -120,6 +124,7 @@ app.post("/datavoiture", async (req, res) => {
         res.status(500).send("Une erreur s'est produite lors de la soumission du formulaire de vente de voitures. Veuillez réessayer.");
     }
 });
+
 
 
 
