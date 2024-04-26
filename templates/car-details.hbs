@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/public/car-details.css">
+
+    <title>Détails de la voiture</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Détails de la voiture</h1>
+        <div class="car-details">
+            <p>Marque : {{car.brand}}</p>
+            <p>Modèle : {{car.model}}</p>
+            <p>Année : {{car.year}}</p>
+            <p>Kilométrage : {{car.mileage}}</p>
+            <p>Prix : {{car.price}}</p>
+            <p>Description : {{car.description}}</p>
+            <p>Nom du contact : {{car.contactName}}</p>
+            <img src="{{car.carCondition.image}}" alt="Image de la voiture">
+        </div>
+    </div>
+</body>
+</html>

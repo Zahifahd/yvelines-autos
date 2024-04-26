@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats de la recherche</title>
+    <link rel="stylesheet" href="search-results.css">
+</head>
+<body>
+   <div class="container">
+    <h1>Résultats de la recherche</h1>
+    <ul>
+        {{#each cars}}
+            <li>
+                <div class="car-image">
+                 
+                <img src="/uploads/{{this.image}}" alt="Image par défaut">
+
+                </div>
+                <div class="car-info">
+                    <span class="brand">{{this.brand}}</span><br>
+                    <span class="model">{{this.model}}</span><br>
+                    <span class="year">Année {{this.year}}</span>
+                    <a href="/car-details/{{this._id}}">Voir les détails</a>
+                </div>
+            </li>
+        {{/each}}
+    </ul>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const detailsButtons = document.querySelectorAll('.details-btn');
+        detailsButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const carId = button.dataset.carId;
+                fetch(`/car-details/${carId}`) // Remplacez l'URL par la route appropriée sur votre serveur
+                    .then(response => response.json())
+                    .then(data => {
+                        // Manipulation des données reçues pour afficher les détails de la voiture
+                        console.log(data);
+                        // Vous pouvez également mettre à jour le DOM pour afficher les détails dans une fenêtre modale ou une autre partie de la page
+                    })
+                    .catch(error => console.error('Erreur lors de la récupération des détails de la voiture :', error));
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
