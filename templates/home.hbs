@@ -105,10 +105,14 @@
     <div class="menu-bar">
       <div class="menu">
 
-        <li class="search-box">
-          <i class='bx bx-search icon'></i>
-          <input type="text" placeholder="Rechercher voiture">
-        </li>
+       <form action="/search" method="GET" class="search-form" id="searchForm">
+       <li class="search-box">
+                    <i class='bx bx-search icon'></i>
+                    <input type="text" id="brand" name="brand"  required>
+                </li>
+</form>
+
+
 
         <ul class="menu-links">
           <li class="nav-link">
@@ -296,6 +300,23 @@
             });
         });
     </script>
+    <script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Empêche le comportement par défaut du formulaire
+        const searchTerm = document.getElementById('brand').value.trim(); // Récupère la valeur du champ de recherche en retirant les espaces
+        if (searchTerm) {
+            window.location.href = `/search?brand=${encodeURIComponent(searchTerm)}`; // Redirige vers la page de recherche avec le terme de recherche dans l'URL
+        }
+    });
+
+    // Ajoutez cet événement pour soumettre le formulaire lorsque l'utilisateur appuie sur Entrée
+    document.getElementById('brand').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+        }
+    });
+</script>
+
   <script src="app.js"></script> 
 </body>
 
