@@ -40,7 +40,7 @@ body.dark {
   --primary-color: #3a3b3c;
   --primary-color-light: #3a3b3c;
   --toggle-color: #fff;
-  --text-color: #ccc;
+  --text-color: white;
 }
 
 /* ===== Sidebar ===== */
@@ -157,7 +157,7 @@ header .image-text .profession {
   cursor: pointer;
   transition: var(--tran-05);
 }
-
+r 
 body.dark .sidebar header .toggle {
   color: var(--text-color);
 }

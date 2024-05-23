@@ -13,5 +13,10 @@ async function registerUser(userData) {
     throw error;
   }
 }
+app.get("/logout", (req, res) => {
+  // Déconnectez l'utilisateur en effaçant ses informations de session
+  // Redirigez l'utilisateur vers la page de connexion ou une autre page appropriée
+  res.redirect("/login");
+});
 
 module.exports = registerUser;

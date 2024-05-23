@@ -1,16 +1,15 @@
+<!-- voitures-disponibles.hbs -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Résultats de la recherche</title>
-     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="search-results.css">
+        <link rel="stylesheet" href="voitures-disponibles.css">
+          <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <title>Voitures Disponibles</title>
 </head>
 <body>
-    <form action="/datavoiture" method="post" enctype="multipart/form-data"></form>
-  
-      <nav class="sidebar open">
+     <nav class="sidebar open">
     <!-- Contenu de la sidebar -->
     <header>
       <div class="image-text">
@@ -86,31 +85,31 @@
 </div>
 
     </div>
-      </nav>
-      <section class="home">
-    <main>
-        {{#if cars.length}}
-            <ul class="car-list">
-                {{#each cars}}
-                    <li class="car-item">
-                   <img src="{{carCondition.image}}" alt="{{brand}} {{model}}">
 
-                        <div class="car-details">
-                            <h2>{{this.brand}} {{this.model}}</h2>
-                            <p>Année : {{this.year}}</p>
-                            <p>Kilométrage : {{this.mileage}} km</p>
-                            <p>Prix : {{this.price}} €</p>
-                            <a href="/car-details/{{this._id}}" class="details-btn">Voir les détails</a>
-                        </div>
-                    </li>
-                {{/each}}
-            </ul>
-        {{else}}
-            <p>Aucune voiture trouvée pour cette marque.</p>
-        {{/if}}
-    </main></section>
-</body>
-<script>
+  </nav>
+  <section class="home">
+    <div class = "nom">
+    <h1>Voitures Disponibles à l'Achat</h1>
+    </div>
+    <div class="liste-voitures">
+        {{#each voitures}}
+    <div class="voiture">
+        <a href="/car-details/{{_id}}">
+            <img src="{{carCondition.image}}" alt="{{brand}} {{model}}">
+        </a>
+        <p>Marque: {{brand}}</p>
+        <p>Modèle: {{model}}</p>
+        <p>Année: {{year}}</p>
+        <p>Kilométrage: {{mileage}}</p>
+        <p>Prix: {{price}}</p>
+        <p>Description: {{description}}</p>
+        <p>Contact: {{contactName}}</p>
+    </div>
+{{/each}}
+
+    </div>
+    </div></section>
+     <script>
     const body = document.querySelector('body'),
       sidebar = body.querySelector('nav'),
       toggle = body.querySelector(".toggle"),
@@ -131,5 +130,7 @@
         modeText.innerText = "Dark mode";
       }
     });
-    </script>
+  </script>
+
+</body>
 </html>

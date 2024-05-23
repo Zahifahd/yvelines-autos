@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/login")
-  .then(() => {
-    console.log("Mongo connecté");
-  })
-  .catch(() => {
-    console.log("Connexion échouée");
-  });
+mongoose.connect("mongodb://localhost:27017/login", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => {
+  console.log("Mongo connecté à la base de données des utilisateurs");
+}).catch((err) => {
+  console.log("Connexion échouée à la base de données des utilisateurs", err);
+});
 
 const LoginSchema = new mongoose.Schema({
   username: {
@@ -37,9 +38,9 @@ const LoginSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  postalcode:{
-    type:String,
-    required:true
+  postalcode: {
+    type: String,
+    required: true
   },
 });
 

@@ -169,77 +169,77 @@
             <div class="swiper-wrapper">
                 <!-- Chaque image est entourée d'une div swiper-slide -->
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/renault-2_39933.html">
+                    <a href="http://localhost:5000/search?brand=renault">
                         <img src="https://www.cdnlogo.com/logos/r/38/renault-2.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/peugeot_34268.html">
+                    <a href="http://localhost:5000/search?brand=peugeot">
                         <img src="https://www.cdnlogo.com/logos/p/58/peugeot.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/tesla_39673.html">
+                    <a href="http://localhost:5000/search?brand=tesla">
                         <img src="https://www.cdnlogo.com/logos/t/25/tesla.svg" width="70px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/mercedes-benz_39629.html">
+                    <a href="http://localhost:5000/search?brand=mercedes">
                         <img src="https://www.cdnlogo.com/logos/m/35/mercedes-benz.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/kia_40134.html">
+                    <a href="http://localhost:5000/search?brand=kia">
                         <img src="https://www.cdnlogo.com/logos/k/45/kia.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/bmw_33068.html">
+                    <a href="http://localhost:5000/search?brand=bmw">
                         <img src="https://www.cdnlogo.com/logos/b/27/bmw.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/citroen_59091.html">
+                    <a href="http://localhost:5000/search?brand=citroen">
                         <img src="https://www.cdnlogo.com/logos/c/53/citroen.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/skoda_40081.html">
+                    <a href="http://localhost:5000/search?brand=skoda">
                         <img src="https://www.cdnlogo.com/logos/s/38/skoda.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/volkswagen_4551.html">
+                    <a href="http://localhost:5000/search?brand=volkswagen">
                         <img src="https://www.cdnlogo.com/logos/v/35/volkswagen.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/fiat_34032.html">
+                    <a href="http://localhost:5000/search?brand=fiat">
                         <img src="https://www.cdnlogo.com/logos/f/9/fiat.svg" width="130px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/opel_697.html">
+                    <a href="http://localhost:5000/search?brand=opel">
                         <img src="https://www.cdnlogo.com/logos/o/70/opel.svg" width="130px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/seat_661.html">
+                    <a href="http://localhost:5000/search?brand=seat">
                         <img src="https://www.cdnlogo.com/logos/s/40/seat.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/dacia_45718.html">
+                    <a href="http://localhost:5000/search?brand=dacia">
                         <img src="https://www.cdnlogo.com/logos/d/32/dacia.svg" width="130px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/audi-black_421.html">
+                    <a href="http://localhost:5000/search?brand=audi">
                         <img src="https://www.cdnlogo.com/logos/a/48/audi33.svg" width="150px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="https://cdnlogo.com/logo/ford_644.html">
+                    <a href="http://localhost:5000/search?brand=ford">
                         <img src="https://www.cdnlogo.com/logos/f/80/ford.svg" width="150px">
                     </a>
                 </div>
@@ -258,11 +258,20 @@
         
       <div class="car-options">
     <div class="car-options-container">
-        <div class="car-option">
-            <img src="vendeur1.jpg" alt="Buy a Car">
-            <div class="car-option-overlay">
-                <h3>Acheter votre voiture de rêves</h3>
-            </div>
+       <div class="car-option">
+        <style>
+          .car-option{
+            margin-left: 5%;
+          }
+        </style>
+    <a href="/voitures-disponibles">
+        <img src="vendeur1.jpg" alt="Buy a Car">
+        <div class="car-option-overlay">
+            <h3>Acheter votre voiture de rêves</h3>
+        </div>
+    </a>
+</div>
+
         </div>
         <div class="car-option">
             <img src="loca.jpg" alt="Rent a Car">
@@ -315,6 +324,35 @@
             document.getElementById('searchForm').dispatchEvent(new Event('submit'));
         }
     });
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const bmwLogo = document.getElementById('bmw-logo');
+
+        bmwLogo.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            try {
+                const response = await fetch('/get-bmw-cars', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la récupération des voitures BMW');
+                }
+
+                const cars = await response.json();
+                // Utilisez les données des voitures BMW récupérées pour afficher ou faire ce que vous voulez
+                console.log(cars);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
+
 </script>
 
   <script src="app.js"></script> 

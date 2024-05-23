@@ -58,6 +58,7 @@ const VenteVoitureSchema = new mongoose.Schema({
             default: "/uploads/default-image.jpg" // Chemin par défaut pour les images
         }
     }
+    
 });
 
 const VenteVoiture = mongoose.model("VenteVoiture", VenteVoitureSchema);
