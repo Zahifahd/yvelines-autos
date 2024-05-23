@@ -2,15 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/public/car-details.css">
+  <link rel="stylesheet" href="car-details.css">
 
     <title>Détails de la voiture</title>
 </head>
+<style>
+  
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.car-details {
+    margin-top: 20px;
+}
+
+.car-details p {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.car-details img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+</style>
 <body>
     <div class="container">
         <h1>Détails de la voiture</h1>
-        <div class="car-details">
+        <div class="/car-details">
             <p>Marque : {{car.brand}}</p>
             <p>Modèle : {{car.model}}</p>
             <p>Année : {{car.year}}</p>
@@ -18,8 +61,12 @@
             <p>Prix : {{car.price}}</p>
             <p>Description : {{car.description}}</p>
             <p>Nom du contact : {{car.contactName}}</p>
-            <img src="{{car.carCondition.image}}" alt="Image de la voiture">
+          <img src="/uploads-cars/{{car.carCondition.image}}" alt="Image de la voiture">
+
+
+
         </div>
+        <button id="addToFavorites">Ajouter aux favoris</button>
     </div>
 </body>
 </html>
