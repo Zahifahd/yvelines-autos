@@ -93,8 +93,7 @@
             <ul class="car-list">
                 {{#each cars}}
                     <li class="car-item">
-                    <label for="image">Image de la voiture :</label>
-        <input type="file" id="image" name="image" accept="image/*" required>
+                   <img src="{{carCondition.image}}" alt="{{brand}} {{model}}">
 
                         <div class="car-details">
                             <h2>{{this.brand}} {{this.model}}</h2>
