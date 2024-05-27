@@ -182,6 +182,37 @@ app.get('/get-bmw-cars', async (req, res) => {
       res.status(500).json({ message: 'Erreur lors de la récupération des voitures BMW' });
   }
 });
+app.post('/add-to-favorites/:carId', async (req, res) => {
+  const carId = req.params.carId;
+  const { isFavorite } = req.body;
+
+  try {
+      const car = await VenteVoiture.findById(carId);
+      if (!car) {
+          return res.status(404).send('Voiture non trouvée');
+      }
+
+      car.isFavorite = isFavorite; // Mettre à jour le statut "favori"
+      await car.save();
+      res.status(200).send('Voiture ajoutée aux favoris avec succès !');
+  } catch (error) {
+      console.error('Erreur lors de l\'ajout aux favoris :', error);
+      res.status(500).send('Erreur lors de l\'ajout aux favoris. Veuillez réessayer.');
+  }
+});
+// Dans votre fichier index.js ou où vous gérez les routes Express
+app.get('/favorites', async (req, res) => {
+  try {
+      // Récupérez les voitures favorites de l'utilisateur connecté depuis la base de données ou d'une session
+      // Assurez-vous d'avoir la gestion de l'authentification des utilisateurs pour identifier l'utilisateur connecté
+      // Récupérez les données nécessaires pour afficher les voitures favorites
+      const favoriteCars = await getFavoriteCarsForUser(); // Exemple de fonction pour récupérer les voitures favorites
+      res.render('favorites', { favoriteCars });
+  } catch (error) {
+      console.error('Erreur lors de la récupération des voitures favorites :', error);
+      res.status(500).send('Erreur lors de la récupération des voitures favorites');
+  }
+});
 
 // Démarrage du serveur
 app.listen(5000, () => console.log("Le serveur est en cours d'exécution sur le port 5000"));
