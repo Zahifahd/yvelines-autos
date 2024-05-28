@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement</title>
+    <link rel="stylesheet" href="cart.css">
+<meta http-equiv="Content-Security-Policy" content="connect-src 'self' https://api.stripe.com https://*.stripe.com;">
+
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <!-- Section d'informations sur la voiture -->
+    <div class="car-details">
+        <h2>Voiture à acheter</h2>
+        <div class="car-info">
+            <p>Marque: {{car.brand}}</p>
+            <p>Modèle: {{car.model}}</p>
+            <p>Prix: {{car.price}}</p>        
+          <img src="{{car.imageUrl}}" alt="Image de la voiture">
+        </div>
+    </div>
+
+    <!-- Section de paiement -->
+    <form id="payment-form">
+        <h2>Informations de paiement</h2>
+        <div id="card-element">
+            <!-- Les champs de carte seront ajoutés ici par Stripe.js -->
+        </div>
+        <div id="error-message"></div>
+        <button id="submit-payment">Payer</button>
+    </form>
+
+    <script>
+        // Remplacez 'votre_clé_publique_stripe' par votre clé publique Stripe
+        var stripe = Stripe('pk_test_51PKzpiBKj8o7hpKqobfJjnb4bhvXb9VTFgnLV2jH83Qq3TnQmlK2ezOjqElBAmMlRSNpI0b2FvsiQsMTs0UfO8sa00CqUEwtBC');
+        var elements = stripe.elements();
+        var cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        // Soumettre le formulaire de paiement lors du clic sur le bouton Payer
+       document.getElementById('submit-payment').addEventListener('click', function(event) {
+    event.preventDefault(); // Empêcher le comportement par défaut du formulaire
+    stripe.createPaymentMethod({
+        type: 'card',
+        card: cardElement
+    }).then(function(result) {
+        if (result.error) {
+            // Afficher une erreur si la création du paiement a échoué
+            var errorElement = document.getElementById('error-message');
+            errorElement.textContent = result.error.message;
+        } else {
+            // Rediriger vers la page de paiement réussi
+            window.location.href = "/paiement-reussi";
+        }
+    });
+});
+
+
+        // Récupérer les données de la voiture depuis le stockage local
+        var carData = localStorage.getItem('selectedCar');
+        if (carData) {
+            var car = JSON.parse(carData);
+            // Afficher les informations de la voiture dans la section appropriée
+            document.querySelector('.car-details .car-info').innerHTML = `
+                <p>Marque: ${car.brand}</p>
+                <p>Modèle: ${car.model}</p>
+                <p>Prix: ${car.price}</p>
+                <!-- Ajoutez d'autres informations sur la voiture ici -->
+            `;
+        }
+    </script>
+</body>
+</html>

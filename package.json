@@ -1,12 +1,26 @@
 {
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "connect-mongodb-session": "^5.0.0",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-handlebars": "^5.3.3",
     "express-session": "^1.18.0",
     "hbs": "^4.2.0",
     "mongoose": "^8.3.2",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.0",
-    "otp-generator": "^4.0.1"
-  }
+    "otp-generator": "^4.0.1",
+    "stripe": "^15.8.0"
+  },
+  "name": "yvelines-autos",
+  "version": "1.0.0",
+  "description": "- [lien kanban](https://github.com/users/Zahifahd/projects/1/views/1)\r - [lien Roadmap](https://github.com/users/Zahifahd/projects/1/views/4)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

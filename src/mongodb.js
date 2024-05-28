@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/login", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  console.log("Mongo connecté à la base de données des utilisateurs");
-}).catch((err) => {
-  console.log("Connexion échouée à la base de données des utilisateurs", err);
-});
+mongoose.connect("mongodb://localhost:27017/login", { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log("Mongo connecté à la base de données des utilisateurs");
+  })
+  .catch((err) => {
+    console.log("Connexion échouée à la base de données des utilisateurs", err);
+  });
 
 const LoginSchema = new mongoose.Schema({
   username: {
