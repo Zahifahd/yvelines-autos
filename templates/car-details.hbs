@@ -2,92 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="car-details.css">
-
     <title>Détails de la voiture</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 15px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 30px;
+        }
+
+        .car-details {
+            background-color: #fff;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .car-details p {
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #343a40;
+        }
+
+        .car-details img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .btn-add-favorite {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-add-favorite:hover {
+            background-color: #0056b3;
+        }
+
+        #buyButton {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #buyButton:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
-<style>
-  
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-}
-
-.car-details {
-    margin-top: 20px;
-}
-
-.car-details p {
-    margin: 10px 0;
-    font-size: 18px;
-}
-
-.car-details img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 20px auto;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-</style>
 <body>
-    <div class="container">
-        <h1>Détails de la voiture</h1>
-        <div class="/car-details">
-            <p>Marque : {{car.brand}}</p>
-            <p>Modèle : {{car.model}}</p>
-            <p>Année : {{car.year}}</p>
-            <p>Kilométrage : {{car.mileage}}</p>
-            <p>Prix : {{car.price}}</p>
-            <p>Description : {{car.description}}</p>
-            <p>Nom du contact : {{car.contactName}}</p>
-          <img src="/uploads-cars/{{car.carCondition.image}}" alt="Image de la voiture">
+<div class="container">
+    <h1>Détails de la voiture</h1>
+    <div class="car-details">
+        <!-- Affichage des détails de la voiture avec des variables interpolées -->
+        <p>Marque : {{car.brand}}</p>
+        <p>Modèle : {{car.model}}</p>
+        <p>Année : {{car.year}}</p>
+        <p>Kilométrage : {{car.mileage}}</p>
+        <p>Prix : {{car.price}}</p>
+        <p>Description : {{car.description}}</p>
+        <p>Nom du contact : {{car.contactName}}</p>
+   <img src="{{car.carCondition.image}}" alt="{{car.brand}} {{car.model}}">
 
 
-
-        </div>
-       <button class="btn-add-favorite" data-carid="{{car._id}}">Ajouter aux favoris</button>
 
     </div>
+    <!-- Bouton pour ajouter aux favoris -->
+    <button class="btn-add-favorite" data-carid="{{car._id}}" data-car="{{carJSON}}">
+        Ajouter aux favoris
+    </button>
 
+    <!-- Bouton pour acheter la voiture -->
+    <button id="buyButton">Acheter cette voiture</button>
+</div>
+
+<!-- Scripts JavaScript -->
 <script>
+    // Code JavaScript pour la redirection vers la page de paiement
+    document.getElementById('buyButton').addEventListener('click', () => {
+        window.location.href = `/cart/{{car._id}}`;
+    });
+</script>
+<script>
+    // Code JavaScript pour l'ajout aux favoris
     document.addEventListener('DOMContentLoaded', () => {
         const btnAddFavorite = document.querySelector('.btn-add-favorite');
         if (btnAddFavorite) {
             btnAddFavorite.addEventListener('click', async () => {
                 const carId = btnAddFavorite.getAttribute('data-carid');
+                const carData = JSON.parse(btnAddFavorite.getAttribute('data-car'));
                 try {
                     const response = await fetch(`/add-to-favorites/${carId}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        // Ajoutez d'autres données nécessaires ici, comme les tokens d'authentification
+                        body: JSON.stringify(carData)
                     });
                     if (response.ok) {
-                        // Mettez à jour l'interface utilisateur pour indiquer que la voiture a été ajoutée aux favoris
                         btnAddFavorite.innerText = 'Retirer des favoris';
-                        // Vous pouvez également ajouter une classe ou changer l'icône pour indiquer que la voiture est dans les favoris
                     } else {
                         console.error('Erreur lors de l\'ajout aux favoris :', response.statusText);
                     }
@@ -98,6 +142,20 @@ h1 {
         }
     });
 </script>
-
+<script>
+    // Code JavaScript pour stocker les données de la voiture dans le localStorage
+    document.addEventListener('DOMContentLoaded', () => {
+        const buyButton = document.getElementById('buyButton');
+        buyButton.addEventListener('click', () => {
+            const car = {
+                brand: "{{car.brand}}",
+                model: "{{car.model}}",
+                price: "{{car.price}}"
+            };
+            localStorage.setItem('selectedCar', JSON.stringify(car));
+            window.location.href = "/cart";
+        });
+    });
+</script>
 </body>
 </html>

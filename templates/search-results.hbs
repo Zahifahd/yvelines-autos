@@ -93,8 +93,9 @@
             <ul class="car-list">
                 {{#each cars}}
                     <li class="car-item">
+                      <a href="/car-details/{{this._id}}" >
                    <img src="{{carCondition.image}}" alt="{{brand}} {{model}}">
-
+                    </a>
                         <div class="car-details">
                             <h2>{{this.brand}} {{this.model}}</h2>
                             <p>Année : {{this.year}}</p>
