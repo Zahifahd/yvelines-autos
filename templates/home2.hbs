@@ -5,24 +5,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="home2.css">
   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
   <style>
-    /* Style pour la classe profile-image */
-.profile-image {
-  width: 40px; /* Ajustez la largeur de l'image selon vos préférences */
-  height: 40px; /* Ajustez la hauteur de l'image selon vos préférences */
-  border-radius: 50%; /* Pour créer une forme d'avatar circulaire */
-  margin-right: 10px; /* Ajoutez une marge à droite pour séparer l'image du nom d'utilisateur */
-}
-
-/* Style pour la classe username */
-.username {
-  font-size: 16px; /* Ajustez la taille de la police selon vos préférences */
-  font-weight: bold; /* Optionnel : mettez en gras le nom d'utilisateur */
-  margin: 0; /* Assurez-vous qu'il n'y a pas de marge autour du nom d'utilisateur */
-}
-
     .sidebar {
       width: 300px; /* Largeur initiale de la sidebar ouverte */
       transition: width 0.3s ease; /* Animation fluide de la transition */
@@ -52,7 +37,7 @@
     <ul class="top-nav-links">
       <li><a href="Apropos">À Propos</a></li>
       <li><a href="#">Services</a></li>
-      <li><a href="support">Contact</a></li>
+      <li><a href="login">Contact</a></li>
     </ul>
 
     <div class="social-links">
@@ -60,15 +45,43 @@
 
       <img src="logo.jpg" width="100px">
     </div>
-  
-<!-- Modifier votre code pour inclure l'image de profil à côté du nom d'utilisateur -->
-<div class="user-info">
-  <img src="{{ userImage }}" alt="Photo de profil" class="profile-image">
-  <p class="username">{{ username }}</p>
-</div>
+        <div class="auth-links">
+    <button class="btn-53" onclick="redirectToLogin()">
+  <div class="original">Login</div>
+  <div class="letters">
+    <span>L</span>
+    <span>O</span>
+    <span>G</span>
+    <span>I</span>
+    <span>N</span>
+  </div>
+</button>
 
+<script>
+  function redirectToLogin() {
+    window.location.href = "login";
+  }
+</script>
 
+   <button class="btn-54" onclick="redirectToinscription()">
+  <div class="original">Signup</div>
+  <div class="letters">
+    
+    <span>S</span>
+    <span>I</span>
+    <span>G</span>
+    <span>N</span>
+    <span>U</span>
+    <span>P</span>
+  </div>
+</button>
+<script>
+  function redirectToinscription() {
+    window.location.href = "inscription";
+  }
+</script>
 
+    </div>
   </nav>
 </header>
 
@@ -117,7 +130,7 @@
           </li>
 
           <li class="nav-link">
-            <a href="support">
+            <a href="login">
               <i class='bx bx-support icon'></i>
               <span class="text nav-text">Support</span>
             </a>
@@ -164,12 +177,12 @@
                 </div>
                 <div class="swiper-slide">
                     <a href="http://localhost:5000/search?brand=peugeot">
-                        <img src="https://www.cdnlogo.com/logos/p/58/peugeot.svg" width="90px">
+                        <img src="https://www.cdnlogo.com/logos/p/58/peugeot.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <a href="http://localhost:5000/search?brand=tesla">
-                        <img src="\tesla.jpeg" width="100px">
+                        <img src="https://www.cdnlogo.com/logos/t/25/tesla.svg" width="70px">
                     </a>
                 </div>
                 <div class="swiper-slide">
@@ -194,7 +207,7 @@
                 </div>
                 <div class="swiper-slide">
                     <a href="http://localhost:5000/search?brand=skoda">
-                        <img src="https://www.cdnlogo.com/logos/s/38/skoda.svg" width="90px">
+                        <img src="https://www.cdnlogo.com/logos/s/38/skoda.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
@@ -219,12 +232,12 @@
                 </div>
                 <div class="swiper-slide">
                     <a href="http://localhost:5000/search?brand=dacia">
-                        <img src="https://www.cdnlogo.com/logos/d/32/dacia.svg" width="100px">
+                        <img src="https://www.cdnlogo.com/logos/d/32/dacia.svg" width="130px">
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <a href="http://localhost:5000/search?brand=audi">
-                        <img src="https://www.cdnlogo.com/logos/a/48/audi33.svg" width="130px">
+                        <img src="https://www.cdnlogo.com/logos/a/48/audi33.svg" width="150px">
                     </a>
                 </div>
                 <div class="swiper-slide">
@@ -268,7 +281,7 @@
                 <h3>Louer la voiture de votre choix</h3>
             </div>
         </div>
-       <a href="/datavoiture" class="car-option">
+       <a href="/login" class="car-option">
     <img src="oca.jpg" alt="Sell Your Car">
     <div class="car-option-overlay">
         <h3>Vendez votre voiture</h3>
@@ -343,30 +356,6 @@
 </script>
 
 </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const authLinks = document.querySelector('.auth-links');
-
-      // Vérifiez si l'utilisateur est authentifié en session
-      const username = '<%= typeof username !== "undefined" ? username : "" %>';
-      const userId = '<%= typeof userId !== "undefined" ? userId : "" %>';
-
-      if (username && userId) {
-        // Créez un élément pour afficher le nom d'utilisateur et l'ID
-        const userInfoElement = document.createElement('div');
-        userInfoElement.innerHTML = `Welcome, ${username} (ID: ${userId})`;
-
-        // Ajoutez la classe CSS pour le style
-        userInfoElement.classList.add('user-info');
-
-        // Ajoutez l'élément à la barre de navigation
-        authLinks.appendChild(userInfoElement);
-      } else {
-        // Si l'utilisateur n'est pas authentifié, vous pouvez afficher les liens de connexion et d'inscription
-        // Mettez ici le code pour les liens de connexion et d'inscription si nécessaire
-      }
-    });
-  </script>
 
   <script src="app.js"></script> 
 </body>

@@ -9,6 +9,7 @@ const collection = require("./mongodb"); // Importation du modèle User depuis m
 const VenteVoiture = require("./voiture"); // Importation du modèle VenteVoiture
 const Favorite = require('./favorites');
 const stripe = require('stripe')('sk_test_51PKzpiBKj8o7hpKq8MaPSprI3xXwYOilZEdRrv2ZigelFCdZQ207KhUoJBx03Qz5TI2pchZ7zoO5CYTXhTvCWuMt005eAQHL8a');
+const fs = require('fs');
 
 // Initialisation d'Express
 const app = express();
@@ -33,9 +34,33 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// Routes
+const userStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/uploads-users/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
 
-// Route pour afficher le formulaire de connexion
+const uploadUserImage = multer({ storage: userStorage });
+// Route pour afficher le profil de l'utilisateur
+// Dans votre fichier Node.js où vous servez votre page HTML
+app.get('/user/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).send('Utilisateur non trouvé');
+    }
+  } catch (err) {
+    res.status(500).send('Erreur du serveur');
+  }
+});
+
+
 app.get("/login", (req, res) => res.render("login"));
 
 // Route pour afficher le formulaire d'inscription
@@ -46,6 +71,7 @@ app.get("/", (req, res) => res.sendFile(path.join(__dirname, "templates", "car-d
 
 // Route pour la page de support
 app.get("/support", (req, res) => res.render("support"));
+app.get("/home2", (req, res) => res.render("home2"));
 
 // Route pour la page de données de voiture
 app.get("/datavoiture", (req, res) => res.render("datavoiture"));
@@ -65,10 +91,6 @@ app.get("/search-results", (req, res) => res.render("search-results"));
 // Route pour afficher le panier
 app.get("/cart", (req, res) => res.render("cart"));
 // Route pour afficher les voitures favorites de l'utilisateur
-
-
-
-
 
 // Configuration de la session MongoDB
 const store = new MongoDBSession({
@@ -94,7 +116,21 @@ const isAuth = (req, res, next) => {
 };
 
 // Route pour la page d'accueil après connexion
-app.get("/home", isAuth, (req, res) => res.render("home"));
+app.get("/home", isAuth, async (req, res) => {
+  try {
+    // Récupérer le nom d'utilisateur et l'image de profil de l'utilisateur en session
+    const username = req.session.username;
+    const user = await collection.findOne({ username }); // Récupérer les données de l'utilisateur connecté depuis la base de données
+    const userImage = user ? user.image : "/uploads-users/default-image.png"; // Récupérer le chemin de l'image de profil de l'utilisateur ou utiliser une image par défaut
+
+    // Rendre la page home en passant le nom d'utilisateur et le chemin de l'image de profil au modèle
+    res.render("home", { username, userImage });
+  } catch (error) {
+    console.error("Erreur lors de la récupération des données de l'utilisateur :", error);
+    res.status(500).send('Erreur du serveur');
+  }
+});
+
 
 // Route pour la déconnexion
 app.get("/logout", (req, res) => {
@@ -107,6 +143,13 @@ app.get("/logout", (req, res) => {
     }
   });
 });
+app.get("/support", (req, res, next) => {
+  if (!req.session.isAuth) {
+    return res.redirect("/login");
+  }
+  next();
+}, (req, res) => res.render("support"));
+
 
 // Route pour afficher toutes les voitures disponibles
 app.get("/voitures-disponibles", async (req, res) => {
@@ -125,8 +168,8 @@ app.get('/paiement-reussi', (req, res) => res.render('paiement-reussi'));
 // Route pour afficher le paiement échoué
 app.get('/paiement-erreur', (req, res) => res.render('paiement-erreur'));
 
-// Route pour enregistrer un nouvel utilisateur
-app.post("/inscription", async (req, res) => {
+
+app.post("/inscription", uploadUserImage.single("profileImage"), async (req, res) => {
   try {
     // Récupération des données du formulaire
     const { username, email, phone, password, cin, city, country, postalcode } = req.body;
@@ -136,14 +179,24 @@ app.post("/inscription", async (req, res) => {
       throw new Error("Veuillez remplir tous les champs du formulaire.");
     }
 
+    // Récupération du chemin de l'image de profil téléchargée, s'il existe
+    const profileImageURL = req.file ? "/uploads-users/" + req.file.filename : "/uploads-users/default-image.png"; // Utilisez le chemin réel de l'image téléchargée
+
     // Hashage du mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Création de l'utilisateur dans la base de données
-    await collection.create({ username, email, phone, password: hashedPassword, cin, city, country, postalcode });
-
-    // Enregistrement de l'utilisateur dans la session après l'inscription
-    req.session.username = username;
+    await collection.create({ 
+      username, 
+      email, 
+      phone, 
+      password: hashedPassword, 
+      cin, 
+      city, 
+      country, 
+      postalcode, 
+      image: profileImageURL // Enregistrez le chemin de l'image dans la base de données
+    });
 
     // Redirection vers la page de connexion
     res.redirect("/login");
@@ -161,7 +214,7 @@ app.post("/login", async (req, res) => {
 
     if (!user) {
       console.log("Utilisateur non trouvé");
-      return res.send("Utilisateur non trouvé");
+      return res.render("login", { errorMessage: "Utilisateur non trouvé" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -174,15 +227,21 @@ app.post("/login", async (req, res) => {
       res.redirect("/home");
     } else {
       console.log("Mot de passe incorrect");
-      res.send("Mot de passe incorrect");
+      res.render("login", { errorMessage: "Mot de passe incorrect" });
     }
   } catch (err) {
     console.error("Erreur lors de la connexion :", err);
-    res.send("Erreur lors de la connexion");
+    res.render("login", { errorMessage: "Erreur lors de la connexion" });
   }
 });
+
 // Route pour soumettre les données d'une nouvelle voiture
-app.post("/datavoiture", upload.single("image"), async (req, res) => {
+app.post("/datavoiture", (req, res, next) => {
+  if (!req.session.isAuth) {
+    return res.redirect("/login");
+  }
+  next();
+}, upload.single("image"), async (req, res) => {
   try {
     // Récupération des données du formulaire
     const { brand, model, year, mileage, price, description, 'contact-name': contactName, 'first-registration': firstRegistration, fuel, gearbox, 'tax-power': taxPower, 'din-power': dinPower } = req.body;
@@ -225,7 +284,6 @@ app.post("/datavoiture", upload.single("image"), async (req, res) => {
     res.status(500).render("datavoiture", { error: error.message || "Erreur lors de la soumission du formulaire. Veuillez réessayer." });
   }
 });
-
 // Route pour rechercher des voitures par marque
 app.get("/search", async (req, res) => {
   try {
@@ -340,6 +398,37 @@ app.get("/favorites", isAuth, async (req, res) => {
   } catch (error) {
     console.error("Erreur lors de la récupération des voitures favorites :", error);
     res.status(500).send("Erreur lors de la récupération des voitures favorites. Veuillez réessayer.");
+  }
+});
+// Route pour supprimer une voiture des favoris de l'utilisateur
+app.post("/remove-from-favorites/:carId", isAuth, async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const carId = req.params.carId;
+
+    // Supprimez le favori de la base de données
+    await Favorite.findOneAndDelete({ car: carId, user: userId });
+
+    res.status(200).send("La voiture a été retirée des favoris de l'utilisateur.");
+  } catch (error) {
+    console.error("Erreur lors de la suppression de la voiture des favoris :", error);
+    res.status(500).send("Erreur lors de la suppression de la voiture des favoris. Veuillez réessayer.");
+  }
+});
+// Route pour la page de connexion
+app.get("/connexion", (req, res) => {
+  res.render("connexion");
+});
+
+// Route pour gérer la soumission du formulaire de connexion
+app.post("/connexion", (req, res) => {
+  const { username, password } = req.body;
+  // Votre logique de vérification des informations de connexion
+  if (username === "redaboukir" && password === "reda") {
+      req.session.user = username;
+      res.redirect("/dashboard"); // Redirection vers le tableau de bord si les informations de connexion sont correctes
+  } else {
+      res.render("connexion", { error: "Identifiants incorrects" }); // Afficher un message d'erreur si les informations de connexion sont incorrectes
   }
 });
 

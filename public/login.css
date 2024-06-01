@@ -44,6 +44,9 @@ button {
   border: 1px solid #ddd;
   border-radius: 5px;
 }
+.error-message {
+  color: red;
+}
 
 button {
   background-color: #0056b3;
