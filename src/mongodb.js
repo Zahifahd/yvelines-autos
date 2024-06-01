@@ -41,6 +41,11 @@ const LoginSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  image: {
+    type: String,
+    required: true,
+    default: "/uploads-users/default-image.png" // Chemin par défaut pour les images d'utilisateurs
+}
 });
 
 const collection = mongoose.model("collection1", LoginSchema);

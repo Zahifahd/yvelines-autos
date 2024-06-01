@@ -15,6 +15,10 @@
             <img src="logo.jpg" alt="Logo concessionnaire de voitures" class="logo" />
         </div>
         <h2>Login</h2>
+        <!-- Affichage du message d'erreur -->
+        {{#if errorMessage}}
+        <div class="error-message">{{errorMessage}}</div>
+        {{/if}}
         <form action="/login" method="POST">
             <div class="form-group">
                 <label for="username">Nom d'utilisateur:</label>

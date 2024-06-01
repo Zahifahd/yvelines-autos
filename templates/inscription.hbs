@@ -18,7 +18,7 @@
         <img src="logo.jpg " alt="Logo" class="logo">
     </div>
     <h2>Inscription</h2>
-    <form action="/inscription" method="POST">
+    <form action="/inscription" method="POST" enctype="multipart/form-data">
         <input type="text" name="username" placeholder="Nom d'utilisateur" required>
         <input type="email" name="email" placeholder="Email" required>
         <input type="text" name="phone" placeholder="Numéro de téléphone" required>
@@ -233,6 +233,8 @@
             <input type="checkbox" name="purpose[]" value="vente" id="vente">
             <label for="vente">Vente</label>
         </div></div>
+   
+           <input type="file" name="profileImage" accept="image/*">
         <button type="submit" class="submit-btn">S'inscrire</button>
     </form>
 </div>

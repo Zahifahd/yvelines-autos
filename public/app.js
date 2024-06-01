@@ -38,3 +38,4 @@ carOptionsContainer.addEventListener('click', (event) => {
     window.location.href = `/${targetPage}`;
   }
 });
+

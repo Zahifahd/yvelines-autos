@@ -814,21 +814,5 @@ main-content {
   color: #fff;
   text-align: center;
 }
-/* Dans votre fichier CSS */
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 
-.user-photo {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
 
-.username {
-  font-size: 14px;
-  color: #333;
-  text-transform: capitalize; /* Pour que le nom d'utilisateur soit bien écrit */
-}
