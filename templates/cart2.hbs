@@ -27,9 +27,6 @@
             padding: 20px;
             border-radius: 8px;
         }
-        .payment-form p {
-            margin-top: 0; /* Pour supprimer la marge par défaut */
-        }
     </style>
     <meta http-equiv="Content-Security-Policy" content="connect-src 'self' https://api.stripe.com https://*.stripe.com;">
     <script src="https://js.stripe.com/v3/"></script>
@@ -39,10 +36,9 @@
     <div class="car-details">
         <h2>Voiture à acheter</h2>
         <div class="car-info">
-            <p>Marque: <strong id="car-brand"></strong></p>
-            <p>Modèle: <strong id="car-model"></strong></p>
-            <p>Prix: <strong id="car-price"></strong></p> <!-- Afficher le prix ici -->
-            <img src="" alt="" id="car-image">
+            <p>Marque: {{car.brand}}</p>
+            <p>Modèle: {{car.model}}</p>
+            <img src="{{car.image}}" alt="{{car.brand}} {{car.model}}">
         </div>
     </div>
 
@@ -68,10 +64,8 @@
             </div>
         </div>
         <div id="error-message"></div>
-        <form action="/acheter-voiture/{{car._id}}" method="POST">
-    <button id="submit-payment">Payer</button>
-</form>
-    
+        Montant a payer : <strong>100e</strong>
+        <button id="submit-payment">Payer</button>
     </div>
 
     <script>
@@ -95,7 +89,7 @@
                     var errorElement = document.getElementById('error-message');
                     errorElement.textContent = result.error.message;
                 } else {
-                    window.location.href = "/acheter-voiture";
+                    window.location.href = "/paiement-reussi";
                 }
             });
         });
@@ -103,10 +97,11 @@
         var carData = localStorage.getItem('selectedCar');
         if (carData) {
             var car = JSON.parse(carData);
-            document.getElementById('car-brand').textContent = car.brand;
-            document.getElementById('car-model').textContent = car.model;
-            document.getElementById('car-price').textContent = car.price;
-            document.getElementById('car-image').src = car.image;
+            document.querySelector('.car-details .car-info').innerHTML = `
+                <p>Marque: ${car.brand}</p>
+                <p>Modèle: ${car.model}</p>
+                <img src="${car.image}" alt="${car.brand} ${car.model}">
+            `;
         }
     </script>
 </body>

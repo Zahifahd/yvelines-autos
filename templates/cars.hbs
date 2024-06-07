@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier Voiture</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .details {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .details h2 {
+            margin-top: 0;
+        }
+
+        .details img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="details">
+        <h2>Modifier Voiture</h2>
+  <form id="carForm" action="/dashboard/cars/:carId" method="post">
+
+
+
+            <img id="carImage" src="" alt="Car Image">
+            <p><strong>Brand:</strong> <input type="text" id="brand" name="brand"></p>
+            <p><strong>Model:</strong> <input type="text" id="model" name="model"></p>
+            <p><strong>Year:</strong> <input type="number" id="year" name="year"></p>
+            <p><strong>Mileage:</strong> <input type="number" id="mileage" name="mileage"></p>
+            <p><strong>Price:</strong> <input type="number" id="price" name="price"></p>
+            <p><strong>Description:</strong> <textarea id="description" name="description"></textarea></p>
+            <p><strong>Contact Name:</strong> <input type="text" id="contactName" name="contactName"></p>
+            <p><strong>First Registration:</strong> <input type="date" id="firstRegistration" name="firstRegistration"></p>
+            <p><strong>Fuel:</strong> <input type="text" id="fuel" name="fuel"></p>
+            <p><strong>Gearbox:</strong> <input type="text" id="gearbox" name="gearbox"></p>
+            <p><strong>Tax Power:</strong> <input type="number" id="taxPower" name="taxPower"></p>
+            <p><strong>DIN Power:</strong> <input type="number" id="dinPower" name="dinPower"></p>
+            <button type="submit">Modifier</button>
+        </form>
+    </div>
+
+    <script>
+        // Récupérer l'identifiant de la voiture depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const carId = urlParams.get('carId');
+
+        // Récupérer les détails de la voiture depuis la base de données et pré-remplir le formulaire
+        fetch(`/dashboard/car-details/${carId}`)
+            .then(response => response.json())
+            .then(car => {
+                // Mettre à jour les champs du formulaire avec les données de la voiture
+                document.getElementById('carImage').src = car.carCondition.image;
+                document.getElementById('brand').value = car.brand;
+                document.getElementById('model').value = car.model;
+                document.getElementById('year').value = car.year;
+                document.getElementById('mileage').value = car.mileage;
+                document.getElementById('price').value = car.price;
+                document.getElementById('description').value = car.description;
+                document.getElementById('contactName').value = car.contactName;
+                document.getElementById('firstRegistration').value = new Date(car.carCondition.firstRegistration).toISOString().split('T')[0];
+                document.getElementById('fuel').value = car.carCondition.fuel;
+                document.getElementById('gearbox').value = car.carCondition.gearbox;
+                document.getElementById('taxPower').value = car.carCondition.taxPower;
+                document.getElementById('dinPower').value = car.carCondition.dinPower;
+            })
+            .catch(error => {
+                console.error("Erreur lors de la récupération des détails de la voiture :", error);
+                alert("Erreur lors de la récupération des détails de la voiture. Veuillez réessayer.");
+            });
+
+        // Écouter l'événement de soumission du formulaire
+     document.getElementById('carForm').addEventListener('submit', function(event) {
+
+            event.preventDefault(); // Empêcher la soumission par défaut du formulaire
+
+            // Récupérer les données du formulaire
+            const formData = new FormData(this);
+
+            // Envoyer les données modifiées au serveur pour mettre à jour la voiture
+            fetch(`/dashboard/update-car/${carId}`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Voiture mise à jour avec succès !');
+                    // Rediriger vers la page des détails de la voiture mise à jour
+                    window.location.href = `/car-details/${carId}`;
+
+                } else {
+                    throw new Error('Erreur lors de la mise à jour de la voiture.');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la mise à jour de la voiture :', error);
+                alert('Erreur lors de la mise à jour de la voiture. Veuillez réessayer.');
+            });
+        });
+    </script>
+</body>
+</html>

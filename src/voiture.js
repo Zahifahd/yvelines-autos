@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const VenteVoitureSchema = new mongoose.Schema({
+     
     brand: {
         type: String,
         required: true
@@ -57,7 +58,7 @@ const VenteVoitureSchema = new mongoose.Schema({
             required: true,
             default: "/uploads/default-image.jpg" // Chemin par défaut pour les images
         }
-    }
+    },
     
 });
 

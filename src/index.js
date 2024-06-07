@@ -5,16 +5,25 @@ const MongoDBSession = require('connect-mongodb-session')(session);
 const path = require("path");
 const bcrypt = require('bcrypt');
 const multer = require("multer");
-const collection = require("./mongodb"); // Importation du modèle User depuis mongodb.js
+const User = require("./mongodb"); // Importation du modèle User depuis mongodb.js
 const VenteVoiture = require("./voiture"); // Importation du modèle VenteVoiture
 const Favorite = require('./favorites');
 const stripe = require('stripe')('sk_test_51PKzpiBKj8o7hpKq8MaPSprI3xXwYOilZEdRrv2ZigelFCdZQ207KhUoJBx03Qz5TI2pchZ7zoO5CYTXhTvCWuMt005eAQHL8a');
 const fs = require('fs');
-
+const jwt = require('jsonwebtoken');
+const mailgun = require("mailgun-js");
+const _ = require('lodash');
+require('dotenv').config(); 
+const router = express.Router();
+const bodyParser = require('body-parser'); 
 // Initialisation d'Express
 const app = express();
 const templatePath = path.join(__dirname, "../templates");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
+
+const JWT_ACC_ACTIVATE = 'accountactivatekey123'; 
 // Configuration d'Express
 app.set("view engine", "hbs"); // Utilisation de Handlebars comme moteur de template
 app.set("views", templatePath); // Définition du dossier des vues
@@ -45,11 +54,10 @@ const userStorage = multer.diskStorage({
 });
 
 const uploadUserImage = multer({ storage: userStorage });
-// Route pour afficher le profil de l'utilisateur
-// Dans votre fichier Node.js où vous servez votre page HTML
+
 app.get('/user/:id', async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id); // Utilisation du modèle User pour trouver l'utilisateur par son ID
     if (user) {
       res.json(user);
     } else {
@@ -90,7 +98,17 @@ app.get("/search-results", (req, res) => res.render("search-results"));
 
 // Route pour afficher le panier
 app.get("/cart", (req, res) => res.render("cart"));
-// Route pour afficher les voitures favorites de l'utilisateur
+app.get("/acheter-voiture", (req, res) => res.render("acheter-voiture"));
+
+app.get("/choisir-mode-paiement", (req, res) => {
+  res.render("choisir-mode-paiement");
+});
+app.get("/paiement-espece", (req, res) => {
+  res.render("paiement-espece"); 
+});
+app.get("/cart2", (req, res) => {
+  res.render("cart2"); 
+});
 
 // Configuration de la session MongoDB
 const store = new MongoDBSession({
@@ -120,7 +138,7 @@ app.get("/home", isAuth, async (req, res) => {
   try {
     // Récupérer le nom d'utilisateur et l'image de profil de l'utilisateur en session
     const username = req.session.username;
-    const user = await collection.findOne({ username }); // Récupérer les données de l'utilisateur connecté depuis la base de données
+    const user = await User.findOne({ username }); // Utilisation du modèle User pour trouver l'utilisateur par son nom d'utilisateur
     const userImage = user ? user.image : "/uploads-users/default-image.png"; // Récupérer le chemin de l'image de profil de l'utilisateur ou utiliser une image par défaut
 
     // Rendre la page home en passant le nom d'utilisateur et le chemin de l'image de profil au modèle
@@ -130,6 +148,7 @@ app.get("/home", isAuth, async (req, res) => {
     res.status(500).send('Erreur du serveur');
   }
 });
+
 
 
 // Route pour la déconnexion
@@ -186,7 +205,7 @@ app.post("/inscription", uploadUserImage.single("profileImage"), async (req, res
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Création de l'utilisateur dans la base de données
-    await collection.create({ 
+    await User.create({ 
       username, 
       email, 
       phone, 
@@ -206,11 +225,12 @@ app.post("/inscription", uploadUserImage.single("profileImage"), async (req, res
   }
 });
 
+
 // Route pour la connexion de l'utilisateur
 app.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
-    const user = await collection.findOne({ username });
+    const user = await User.findOne({ username });
 
     if (!user) {
       console.log("Utilisateur non trouvé");
@@ -234,6 +254,115 @@ app.post("/login", async (req, res) => {
     res.render("login", { errorMessage: "Erreur lors de la connexion" });
   }
 });
+app.get("/forgot-password", (req, res) => {
+  res.render("forgot-password"); // Affiche le formulaire de réinitialisation de mot de passe
+});
+app.get("/reset-password", (req, res) => {
+  res.render("reset-password"); // Affiche le formulaire de réinitialisation de mot de passe
+});
+
+const mg = mailgun({apiKey: '86cb81101fa534b0964f3a2daeb1f679-a4da91cf-f1f1cea7', domain: 'sandboxf9efb0ab51ce47929be5d080e550a2eb.mailgun.org'});
+
+// Activation du compte
+app.post("/activateAccount", async (req, res) => {
+  const { token } = req.body;
+  if (token) {
+    try {
+      const decodedToken = jwt.verify(token, JWT_ACC_ACTIVATE);
+
+      const { username, email, password } = decodedToken;
+      const user = await User.findOne({ email }).exec();
+      if (user) {
+        return res.status(400).json({ error: 'Un utilisateur avec cet email existe déjà' });
+      }
+      const newUser = new User({ username, email, password });
+      await newUser.save();
+      return res.json({ message: "Inscription réussie" });
+    } catch (err) {
+      console.log("Erreur lors de l'inscription pendant l'activation du compte :", err);
+      return res.status(400).json({ error: 'Erreur lors de l activation du compte ' });
+    }
+  } else {
+    return res.json({ error: "Erreur" });
+  }
+});
+
+// Mot de passe oublié
+// Mot de passe oublié
+// Mot de passe oublié
+app.post("/forgotPassword", async (req, res) => {
+  try {
+    const { email } = req.body;
+    // Recherche de l'utilisateur dans la base de données par son adresse e-mail
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      // Si aucun utilisateur n'est trouvé avec cette adresse e-mail, renvoyer une erreur
+      return res.status(400).json({ error: "Aucun utilisateur avec cet email" });
+    }
+
+    // Génération du token JWT pour la réinitialisation du mot de passe avec l'ID de l'utilisateur
+    const token = jwt.sign({ _id: user._id }, JWT_ACC_ACTIVATE, { expiresIn: '20m' });
+
+    // Construction du lien de réinitialisation du mot de passe
+    const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${token}`;
+
+    // Enregistrement du token de réinitialisation dans la base de données pour cet utilisateur
+    user.resetLink = token;
+    await user.save();
+
+    // Envoi d'un e-mail avec le lien de réinitialisation
+    const data = {
+      from: 'yvelinesauto@support.com',
+      to: email,
+      subject: 'Lien de réinitialisation du mot de passe',
+      html: `<h2>Veuillez cliquer sur le lien pour réinitialiser votre mot de passe :</h2>
+            <p>${resetLink}</p>`
+    };
+
+    // Envoi de l'e-mail
+    mg.messages().send(data, function (error, body) {
+      if (error) {
+        // En cas d'erreur lors de l'envoi de l'e-mail, renvoyer une erreur
+        return res.status(500).json({ error: "Erreur lors de l'envoi de l'e-mail" });
+      }
+      // Si l'e-mail est envoyé avec succès, renvoyer un message de succès
+      return res.json({ message: 'Email envoyé avec succès' });
+    });
+  } catch (error) {
+    // En cas d'erreur imprévue, renvoyer une erreur
+    console.error("Erreur lors de la réinitialisation du mot de passe :", error);
+    return res.status(500).json({ error: "Erreur lors de la réinitialisation du mot de passe" });
+  }
+});
+
+
+
+// Réinitialisation du mot de passe
+app.post("/resetPassword", async (req, res) => {
+  const { resetLink, newPass } = req.body;
+  if (resetLink) {
+    try {
+      const decodedData = jwt.verify(resetLink, process.env.RESET_PASSWORD_KEY);
+      const user = await User.findOne({ resetLink }).exec();
+      if (!user) {
+        return res.status(400).json({ error: "Aucun token trouvé" });
+      }
+      user.password = newPass;
+      user.resetLink = '';
+      await user.save();
+      return res.status(200).json({ message: "Mot de passe changé avec succès" });
+    } catch (error) {
+      return res.json({ error: "Token incorrect ou invalide" });
+    }
+  } else {
+    return res.status(401).json({ error: "Erreur d'authentification" });
+  }
+});
+
+
+
+// Activation du compte utilisateur
 
 // Route pour soumettre les données d'une nouvelle voiture
 app.post("/datavoiture", (req, res, next) => {
@@ -310,26 +439,19 @@ app.use((req, res, next) => {
   next();
 });
 
-// Route pour afficher les détails d'une voiture en fonction de son ID
-// Route pour afficher les détails d'une voiture en fonction de son ID
 app.get("/car-details/:carId", async (req, res) => {
   try {
     const carId = req.params.carId;
-    if (!carId) {
-      throw new Error("L'identifiant de la voiture n'est pas fourni");
-    }
-    // Récupération des détails de la voiture à partir de son ID
+    if (!carId) throw new Error("L'identifiant de la voiture n'est pas fourni");
     const car = await VenteVoiture.findById(carId);
-    if (!car) {
-      throw new Error("Voiture non trouvée");
-    }
-    // Rendu de la page de détails de la voiture avec les données de la voiture
+    if (!car) throw new Error("Voiture non trouvée");
     res.render("car-details", { car, carJSON: JSON.stringify(car) });
   } catch (error) {
     console.error("Erreur lors de la récupération des détails de la voiture :", error);
     res.status(400).send("Erreur lors de la récupération des détails de la voiture. Veuillez réessayer.");
   }
 });
+
 
 // Route pour ajouter une voiture aux favoris
 app.post("/add-to-favorites/:carId", isAuth, async (req, res) => {
@@ -400,6 +522,55 @@ app.get("/favorites", isAuth, async (req, res) => {
     res.status(500).send("Erreur lors de la récupération des voitures favorites. Veuillez réessayer.");
   }
 });
+router.get('/choisir-mode-paiement/:carId', (req, res) => {
+  const carId = req.params.carId;
+  // Utilisez carId pour effectuer des opérations nécessaires, comme récupérer les détails de la voiture et afficher la page de choix de mode de paiement
+  // Par exemple :
+  res.render('choisir-mode-paiement', { carId: carId }); // Rendu de la page choisir-mode-paiement avec le carId
+});
+
+app.get("/dashboard", async (req, res) => {
+  try {
+      const numUsers = await User.countDocuments();
+      const numCars = await VenteVoiture.countDocuments();
+      const users = await User.find();
+      const cars = await VenteVoiture.find();
+      res.render("dashboard", { numUsers, numCars, users, cars });
+  } catch (error) {
+      console.error("Erreur lors de la récupération du nombre de voitures et d'utilisateurs :", error);
+      res.status(500).send("Erreur lors de la récupération du nombre de voitures et d'utilisateurs. Veuillez réessayer.");
+  }
+});
+app.post('/dashboard/cars/:carId', async (req, res) => {
+  const carId = req.params.carId;
+  const updatedCarData = req.body; // Les nouvelles données de la voiture envoyées dans le corps de la requête
+  try {
+    // Mettre à jour les détails de la voiture dans la base de données
+    await VenteVoiture.findByIdAndUpdate(carId, updatedCarData);
+    res.status(200).send('Les détails de la voiture ont été mis à jour avec succès.');
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour des détails de la voiture :', error);
+    res.status(500).send('Une erreur est survenue lors de la mise à jour des détails de la voiture.');
+  }
+});
+
+
+// Route pour l'achat d'une voiture et suppression de l'annonce
+app.post('/acheter-voiture', async (req, res) => {
+  try {
+      const voitureId = req.body.voitureId; // Supposons que vous envoyez l'ID de la voiture dans le corps de la requête
+
+      // Supprimer la voiture de la base de données
+      await VenteVoiture.findByIdAndRemove(voitureId);
+
+      res.status(200).json({ message: 'La voiture a été achetée avec succès.' });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Une erreur s\'est produite lors de l\'achat de la voiture.' });
+  }
+});
+
+
 // Route pour supprimer une voiture des favoris de l'utilisateur
 app.post("/remove-from-favorites/:carId", isAuth, async (req, res) => {
   try {
@@ -419,21 +590,178 @@ app.post("/remove-from-favorites/:carId", isAuth, async (req, res) => {
 app.get("/connexion", (req, res) => {
   res.render("connexion");
 });
+app.get("/user", (req, res) => {
+  res.render("user");
+});
+app.get("/cars", (req, res) => {
+  res.render("cars");
+});
+// Route pour mettre à jour les détails d'une voiture
 
 // Route pour gérer la soumission du formulaire de connexion
 app.post("/connexion", (req, res) => {
   const { username, password } = req.body;
   // Votre logique de vérification des informations de connexion
-  if (username === "redaboukir" && password === "reda") {
+  if ((username === "redaboukir" || username === "fahd") && password === "reda") {
       req.session.user = username;
       res.redirect("/dashboard"); // Redirection vers le tableau de bord si les informations de connexion sont correctes
   } else {
-      res.render("connexion", { error: "Identifiants incorrects" }); // Afficher un message d'erreur si les informations de connexion sont incorrectes
+      res.render("connexion", { errorMessage: "Identifiants incorrects" }); // Passer l'erreur dans le contexte lors du rendu de la page de connexion
   }
 });
 
-// Démarrage du serveur
-app.listen(5000, () => console.log("Le serveur est en cours d'exécution sur le port 5000"));
+// Route pour récupérer le nombre de voitures et d'utilisateurs
 
+// Route pour l'achat d'une voiture
+app.post("/acheter-voiture/:id", async (req, res) => {
+  try {
+    const voitureId = req.params.id;
+    await VenteVoiture.findByIdAndDelete(voitureId);
+    res.redirect("/confirmation-vente");
+  } catch (error) {
+    console.error("Erreur lors de l'achat de la voiture :", error);
+    res.status(500).send("Erreur lors de l'achat de la voiture. Veuillez réessayer.");
+  }
+});
+
+
+// Route pour récupérer tous les utilisateurs
+router.get("/dashboard", async (req, res) => {
+  try {
+      const numUsers = await User.countDocuments();
+      const numCars = await VenteVoiture.countDocuments();
+      const users = await User.find();
+      const cars = await VenteVoiture.find();
+      res.render("dashboard", { numUsers, numCars, users, cars });
+  } catch (error) {
+      console.error("Erreur lors de la récupération du nombre de voitures et d'utilisateurs :", error);
+      res.status(500).send("Erreur lors de la récupération du nombre de voitures et d'utilisateurs. Veuillez réessayer.");
+  }
+});
+
+router.post("/dashboard/delete-user/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  try {
+      await User.findByIdAndDelete(userId);
+      res.redirect("/dashboard");
+  } catch (error) {
+      console.error("Erreur lors de la suppression de l'utilisateur :", error);
+      res.status(500).send("Erreur lors de la suppression de l'utilisateur. Veuillez réessayer.");
+  }
+});
+
+router.post("/dashboard/delete-car/:carId", async (req, res) => {
+  const carId = req.params.carId;
+  try {
+      await VenteVoiture.findByIdAndDelete(carId);
+      res.redirect("/dashboard");
+  } catch (error) {
+      console.error("Erreur lors de la suppression de la voiture :", error);
+      res.status(500).send("Erreur lors de la suppression de la voiture. Veuillez réessayer.");
+  }
+});
+app.get("/dashboard/car-details/:carId", async (req, res) => {
+  const carId = req.params.carId;
+  try {
+      const car = await VenteVoiture.findById(carId);
+      res.json(car); // Renvoie les détails de la voiture au format JSON
+  } catch (error) {
+      console.error("Erreur lors de la récupération des détails de la voiture :", error);
+      res.status(500).send("Erreur lors de la récupération des détails de la voiture. Veuillez réessayer.");
+  }
+});
+
+
+// Route pour récupérer toutes les voitures
+app.get("/dashboard/cars", async (req, res) => {
+  try {
+    const cars = await VenteVoiture.find();
+    res.render("dashboard-cars", { cars });
+  } catch (error) {
+    console.error("Erreur lors de la récupération des voitures :", error);
+    res.status(500).send("Erreur lors de la récupération des voitures. Veuillez réessayer.");
+  }
+});
+app.post("/dashboard/delete-user/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  try {
+      await User.findByIdAndDelete(userId);
+      res.redirect("/dashboard"); // Redirige vers la page du tableau de bord après la suppression
+  } catch (error) {
+      console.error("Erreur lors de la suppression de l'utilisateur :", error);
+      res.status(500).send("Erreur lors de la suppression de l'utilisateur. Veuillez réessayer.");
+  }
+});
+
+// Supprimer une voiture
+app.post("/dashboard/delete-car/:carId", async (req, res) => {
+  const carId = req.params.carId;
+  try {
+      await VenteVoiture.findByIdAndDelete(carId);
+      res.redirect("/dashboard"); // Redirige vers la page du tableau de bord après la suppression
+  } catch (error) {
+      console.error("Erreur lors de la suppression de la voiture :", error);
+      res.status(500).send("Erreur lors de la suppression de la voiture. Veuillez réessayer.");
+  }
+});
+
+app.get("/dashboard/user-details/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  try {
+      const user = await User.findById(userId);
+      res.json(user); // Renvoie les détails de l'utilisateur au format JSON
+  } catch (error) {
+      console.error("Erreur lors de la récupération des détails de l'utilisateur :", error);
+      res.status(500).send("Erreur lors de la récupération des détails de l'utilisateur. Veuillez réessayer.");
+  }
+});
+app.get("/user/:userId", async (req, res) => {
+  // Récupérer l'ID de l'utilisateur à partir des paramètres de la requête
+  const userId = req.params.userId;
+  // Récupérer les détails de l'utilisateur à partir de la base de données en fonction de l'ID
+  // Puis rendre la page user.hbs avec les détails de l'utilisateur
+});
+app.get("/car/:carId", async (req, res) => {
+  // Récupérer l'ID de la voiture à partir des paramètres de la requête
+  const carId = req.params.carId;
+  // Récupérer les détails de la voiture à partir de la base de données en fonction de l'ID
+  // Puis rendre la page cars.hbs avec les détails de la voiture
+});
+
+app.post('/create-checkout-session', async (req, res) => {
+  const { carId } = req.body;
+
+  try {
+      // Récupérer les détails de la voiture à partir de la base de données
+      const carDetails = await Car.findById(carId);
+
+      if (!carDetails) {
+          return res.status(404).json({ error: 'Voiture non trouvée' });
+      }
+
+      // Créer une session de paiement Stripe avec les détails de la voiture
+      const session = await stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          line_items: [{
+              name: `${carDetails.brand} ${carDetails.model}`, // Utilisez la marque et le modèle de la voiture pour le nom
+              images: [carDetails.carCondition.image], // Utilisez l'image de la voiture
+              amount: carDetails.price * 100, // Le prix doit être en centimes
+              currency: 'eur',
+              quantity: 1,
+          }],
+          success_url: 'http://localhost:5000/paiement-erreur', // URL de redirection en cas de paiement réussi
+          cancel_url: 'http://localhost:5000/paiement-reussi', // URL de redirection en cas d'annulation du paiement
+      });
+
+      res.json({ redirectUrl: session.url });
+  } catch (error) {
+      console.error("Erreur lors de la création de la session de paiement :", error);
+      res.status(500).json({ error: 'Erreur lors de la création de la session de paiement' });
+  }
+});
+
+app.listen(3000, () => {
+  console.log('Serveur démarré sur le port 3000');
+});
 // Exportation du routeur (inutile si vous n'utilisez pas ce fichier comme un module)
 module.exports = app;

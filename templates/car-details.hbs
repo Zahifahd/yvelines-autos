@@ -492,16 +492,14 @@ body.dark .home .text {
     </button>
 
     <!-- Bouton pour acheter la voiture -->
-    <button id="buyButton">Acheter cette voiture</button>
+<button id="buyButton">acheter la voiture</button>
 </div>
 </section>
 
 <!-- Scripts JavaScript -->
 <script>
     // Code JavaScript pour la redirection vers la page de paiement
-    document.getElementById('buyButton').addEventListener('click', () => {
-        window.location.href = `/cart/{{car._id}}`;
-    });
+    
  const body = document.querySelector('body'),
       sidebar = body.querySelector('nav'),
       toggle = body.querySelector(".toggle"),
@@ -553,15 +551,22 @@ body.dark .home .text {
     document.addEventListener('DOMContentLoaded', () => {
         const buyButton = document.getElementById('buyButton');
         buyButton.addEventListener('click', () => {
-            const car = {
-                brand: "{{car.brand}}",
-                model: "{{car.model}}",
-                price: "{{car.price}}"
-            };
+           const car = {
+    brand: "{{car.brand}}",
+    model: "{{car.model}}",
+    price: "{{car.price}}",
+    image: "{{car.carCondition.image}}"
+};
             localStorage.setItem('selectedCar', JSON.stringify(car));
-            window.location.href = "/cart";
+       
         });
     });
+
+    document.getElementById('buyButton').addEventListener('click', () => {
+    window.location.href = '/choisir-mode-paiement'; // Remplacez par l'URL de la page de choix de mode de paiement
+});
+
+
 </script>
 </body>
 </html>

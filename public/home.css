@@ -176,7 +176,9 @@ body.dark .sidebar header .toggle {
   cursor: pointer;
   transition: var(--tran-05);
 }
-
+.username {
+  color: white; /* Définit la couleur du texte en blanc */
+}
 .sidebar li.search-box input {
   height: 100%;
   width: 100%;
@@ -327,7 +329,7 @@ body.dark .home .text {
 /* Styles pour la barre de navigation en haut */
 /* Styles pour le header */
 .top-navbar {
-  background-color: grey;
+  background-color: #252525 ;
   color: #FFF;
   padding: 10px 20px;
   display: flex;
