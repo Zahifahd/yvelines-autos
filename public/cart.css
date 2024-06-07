@@ -1,69 +1,95 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Styles de la section d'informations sur la voiture */
-  .car-details {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .car-details h2 {
-    margin-top: 0;
-  }
-  
-  .car-info {
-    display: flex;
-    align-items: center;
-  }
-  
-  .car-info p {
-    margin: 10px;
-  }
-  
-  .car-info img {
-    max-width: 200px;
-    margin-left: auto;
-  }
-  
-  /* Styles de la section de paiement */
-  #payment-form {
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  #payment-form h2 {
-    margin-top: 0;
-  }
-  
-  #card-element {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  #error-message {
-    color: red;
-    margin-top: 10px;
-  }
-  
-  #submit-payment {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  #submit-payment:hover {
-    background-color: #45a049;
-  }
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 20px;
+  position: relative; /* Ajout de position relative */
+}
+
+.car-details {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.car-info {
+  text-align: center;
+}
+
+.car-info img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+}
+
+#payment-form {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  position: absolute; /* Changement de position */
+  top: 50%; /* Centrage vertical */
+  left: 50%; /* Centrage horizontal */
+  transform: translate(-50%, -50%); /* Ajustement pour centrer */
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="tel"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+#card-element {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+#error-message {
+  color: #ff0000;
+  margin-top: 10px;
+}
+
+#submit-payment {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+#submit-payment:hover {
+  background-color: #45a049;
+}

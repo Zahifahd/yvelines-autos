@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails Utilisateur</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .details {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .details h2 {
+            margin-top: 0;
+        }
+
+        .details img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="details">
+        <h2>Détails Utilisateur</h2>
+        <img id="userImage" src="" alt="User Image">
+        <p><strong>Username:</strong> <span id="username"></span></p>
+        <p><strong>Email:</strong> <span id="email"></span></p>
+        <p><strong>Phone:</strong> <span id="phone"></span></p>
+        <p><strong>CIN:</strong> <span id="cin"></span></p>
+        <p><strong>City:</strong> <span id="city"></span></p>
+        <p><strong>Country:</strong> <span id="country"></span></p>
+        <p><strong>Postal Code:</strong> <span id="postalCode"></span></p>
+    </div>
+
+    <script>
+        // Récupérer l'identifiant de l'utilisateur depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('userId');
+
+        // Requête AJAX pour récupérer les détails de l'utilisateur
+        fetch(`/dashboard/user-details/${userId}`)
+            .then(response => response.json())
+            .then(user => {
+                // Mettre à jour les éléments HTML avec les données de l'utilisateur
+                document.getElementById('userImage').src = user.image;
+                document.getElementById('username').textContent = user.username;
+                document.getElementById('email').textContent = user.email;
+                document.getElementById('phone').textContent = user.phone;
+                document.getElementById('cin').textContent = user.cin;
+                document.getElementById('city').textContent = user.city;
+                document.getElementById('country').textContent = user.country;
+                document.getElementById('postalCode').textContent = user.postalcode;
+            })
+            .catch(error => {
+                console.error("Erreur lors de la récupération des détails de l'utilisateur :", error);
+                alert("Erreur lors de la récupération des détails de l'utilisateur. Veuillez réessayer.");
+            });
+    </script>
+</body>
+</html>

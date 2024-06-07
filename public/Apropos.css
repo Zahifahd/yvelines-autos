@@ -1,51 +1,66 @@
-/* styles.css */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black; /* Couleur d'arrière-plan noire */
+  color: white; /* Couleur du texte */
+  font-family: Arial, sans-serif; /* Police par défaut */
+}
 
 /* Styles pour le conteneur principal */
 .App {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: black;
-    color: white;
-    font-family: Arial, sans-serif;
-    padding: 20px;
-  }
-  
-  /* Styles pour le conteneur du logo */
-  .logo-container {
-    margin-bottom: 20px;
-  }
-  
-  /* Styles pour l'image du logo */
-  .logo-container img {
-    width: 200px; /* Ajustez la taille du logo selon vos besoins */
-    border-radius: 10px; /* Coins arrondis pour l'image */
-  }
-  
-  /* Styles pour le conteneur du texte */
-  .text-container {
-    text-align: center;
-  }
-  
-  /* Styles pour les titres */
-  h1, h2, h3 {
-    margin-bottom: 10px;
-  }
-  
-  /* Styles pour les paragraphes */
-  p {
-    margin-bottom: 5px;
-  }
-  
-  /* Styles pour les liens */
-  a {
-    color: #ffa500; /* Couleur orange pour les liens */
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px; /* Augmente le rembourrage autour du contenu */
+  font-size: 32px; /* Augmente la taille de la police pour tout le contenu */
+}
+
+/* Styles pour le conteneur du logo */
+.logo-container {
+  margin-bottom: 60px; /* Augmente l'espace en dessous du logo */
+}
+
+/* Styles pour l'image du logo */
+.logo-container img {
+  width: 500px; /* Augmente la largeur de l'image */
+  border-radius: 30px; /* Coins arrondis pour l'image */
+}
+
+/* Styles pour le conteneur du texte */
+.text-container {
+  text-align: center;
+}
+
+/* Styles pour les titres */
+h1, h2, h3 {
+  margin-bottom: 30px; /* Augmente l'espace en dessous des titres */
+  font-size: 48px; /* Augmente la taille des titres */
+}
+
+/* Styles pour les paragraphes */
+p {
+  margin-bottom: 20px; /* Augmente l'espace en dessous des paragraphes */
+  font-size: 32px; /* Augmente la taille des paragraphes */
+}
+
+/* Styles pour les liens */
+a {
+  color: orange; /* Couleur orange pour les liens */
+  text-decoration: none;
+  font-size: 32px; /* Augmente la taille des liens */
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.main-title {
+  font-size: 48px;
+  margin-bottom: 60px; /* Ajoute un espace de 20px en bas du titre */
+}
+
+.main-title {
+  font-family: 'Roboto', sans-serif; /* Nouvelle police */
+}

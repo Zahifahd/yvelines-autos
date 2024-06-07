@@ -327,7 +327,7 @@ body.dark .home .text {
 /* Styles pour la barre de navigation en haut */
 /* Styles pour le header */
 .top-navbar {
-  background-color: grey;
+  background-color: #252525 ;
   color: #FFF;
   padding: 10px 20px;
   display: flex;

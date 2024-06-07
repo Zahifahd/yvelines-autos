@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/login", { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log("Mongo connecté à la base de données des utilisateurs");
-  })
-  .catch((err) => {
-    console.log("Connexion échouée à la base de données des utilisateurs", err);
-  });
+// Configuration de la connexion MongoDB
+mongoose.connect('mongodb://localhost:27017/login', {
+  useNewUrlParser: true, // Utiliser l'analyseur d'URL nouvellement intégré
+  useUnifiedTopology: true // Utiliser la topologie unifiée nouvellement intégrée
+}).then(() => {
+  console.log("Mongo est pret ");
+}).catch((err) => {
+  console.error("Erreur lors de la connexion à MongoDB :", err);
+});
 
 const LoginSchema = new mongoose.Schema({
   username: {
@@ -45,8 +47,11 @@ const LoginSchema = new mongoose.Schema({
     type: String,
     required: true,
     default: "/uploads-users/default-image.png" // Chemin par défaut pour les images d'utilisateurs
-}
+  },
+  resetLink: {
+    type: String // Définir le type comme une chaîne de caractères
+  }
 });
 
-const collection = mongoose.model("collection1", LoginSchema);
-module.exports = collection;
+const User = mongoose.model("User", LoginSchema);
+module.exports = User; // Export the User model

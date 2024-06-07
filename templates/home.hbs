@@ -40,6 +40,9 @@
     .sidebar.close ~ .main-content {
       width: calc(100% - 88px); /* Largeur de la partie droite lorsque la sidebar est fermée */
     }
+    .username {
+        color: white; /* Définit la couleur du texte en blanc */
+    }
   </style>
 </head>
 
@@ -51,7 +54,7 @@
     
     <ul class="top-nav-links">
       <li><a href="Apropos">À Propos</a></li>
-      <li><a href="#">Services</a></li>
+      <li><a href="/connexion">Admin</a></li>
       <li><a href="support">Contact</a></li>
     </ul>
 
@@ -64,7 +67,7 @@
 <!-- Modifier votre code pour inclure l'image de profil à côté du nom d'utilisateur -->
 <div class="user-info">
   <img src="{{ userImage }}" alt="Photo de profil" class="profile-image">
-  <p class="username">{{ username }}</p>
+<p class="username">{{ username }}</p>
 </div>
 
 
@@ -158,77 +161,77 @@
             <div class="swiper-wrapper">
                 <!-- Chaque image est entourée d'une div swiper-slide -->
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=renault">
+                    <a href="http://localhost:3000/search?brand=renault">
                         <img src="https://www.cdnlogo.com/logos/r/38/renault-2.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=peugeot">
+                    <a href="http://localhost:3000/search?brand=peugeot">
                         <img src="https://www.cdnlogo.com/logos/p/58/peugeot.svg" width="90px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=tesla">
+                    <a href="http://localhost:3000/search?brand=tesla">
                         <img src="\tesla.jpeg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=mercedes">
+                    <a href="http://localhost:3000/search?brand=mercedes">
                         <img src="https://www.cdnlogo.com/logos/m/35/mercedes-benz.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=kia">
+                    <a href="http://localhost:3000/search?brand=kia">
                         <img src="https://www.cdnlogo.com/logos/k/45/kia.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=bmw">
+                    <a href="http://localhost:3000/search?brand=bmw">
                         <img src="https://www.cdnlogo.com/logos/b/27/bmw.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=citroen">
+                    <a href="http://localhost:3000/search?brand=citroen">
                         <img src="https://www.cdnlogo.com/logos/c/53/citroen.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=skoda">
+                    <a href="http://localhost:3000/search?brand=skoda">
                         <img src="https://www.cdnlogo.com/logos/s/38/skoda.svg" width="90px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=volkswagen">
+                    <a href="http://localhost:3000/search?brand=volkswagen">
                         <img src="https://www.cdnlogo.com/logos/v/35/volkswagen.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=fiat">
+                    <a href="http://localhost:3000/search?brand=fiat">
                         <img src="https://www.cdnlogo.com/logos/f/9/fiat.svg" width="130px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=opel">
+                    <a href="http://localhost:3000/search?brand=opel">
                         <img src="https://www.cdnlogo.com/logos/o/70/opel.svg" width="130px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=seat">
+                    <a href="http://localhost:3000/search?brand=seat">
                         <img src="https://www.cdnlogo.com/logos/s/40/seat.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=dacia">
+                    <a href="http://localhost:3000/search?brand=dacia">
                         <img src="https://www.cdnlogo.com/logos/d/32/dacia.svg" width="100px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=audi">
+                    <a href="http://localhost:3000/search?brand=audi">
                         <img src="https://www.cdnlogo.com/logos/a/48/audi33.svg" width="130px">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="http://localhost:5000/search?brand=ford">
+                    <a href="http://localhost:3000/search?brand=ford">
                         <img src="https://www.cdnlogo.com/logos/f/80/ford.svg" width="150px">
                     </a>
                 </div>
@@ -262,10 +265,10 @@
 </div>
 
         </div>
-        <div class="car-option">
+        <div class="car-option" onclick="afficherMessage()">
             <img src="loca.jpg" alt="Rent a Car">
             <div class="car-option-overlay">
-                <h3>Louer la voiture de votre choix</h3>
+                <h3>Reprise de voiture</h3>
             </div>
         </div>
        <a href="/datavoiture" class="car-option">
@@ -344,6 +347,9 @@
 
 </script>
   <script>
+     function afficherMessage() {
+        alert(" en cours de preparation !");
+    }
     document.addEventListener('DOMContentLoaded', function () {
       const authLinks = document.querySelector('.auth-links');
 
