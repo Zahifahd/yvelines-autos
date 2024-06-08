@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 // Configuration de la connexion MongoDB
 mongoose.connect('mongodb://localhost:27017/login', {
   useNewUrlParser: true, // Utiliser l'analyseur d'URL nouvellement intégré
-  useUnifiedTopology: true // Utiliser la topologie unifiée nouvellement intégrée
+  useUnifiedTopology: true // Utiliser la topologie unifiée nouvellement intégrée 
 }).then(() => {
   console.log("Mongo est pret ");
 }).catch((err) => {

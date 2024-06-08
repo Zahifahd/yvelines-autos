@@ -8,7 +8,6 @@ const multer = require("multer");
 const User = require("./mongodb"); // Importation du modèle User depuis mongodb.js
 const VenteVoiture = require("./voiture"); // Importation du modèle VenteVoiture
 const Favorite = require('./favorites');
-const stripe = require('stripe')('sk_test_51PKzpiBKj8o7hpKq8MaPSprI3xXwYOilZEdRrv2ZigelFCdZQ207KhUoJBx03Qz5TI2pchZ7zoO5CYTXhTvCWuMt005eAQHL8a');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const mailgun = require("mailgun-js");
@@ -21,9 +20,6 @@ const app = express();
 const templatePath = path.join(__dirname, "../templates");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-
-const JWT_ACC_ACTIVATE = 'accountactivatekey123'; 
 // Configuration d'Express
 app.set("view engine", "hbs"); // Utilisation de Handlebars comme moteur de template
 app.set("views", templatePath); // Définition du dossier des vues
@@ -765,3 +761,4 @@ app.listen(3000, () => {
 });
 // Exportation du routeur (inutile si vous n'utilisez pas ce fichier comme un module)
 module.exports = app;
+  
